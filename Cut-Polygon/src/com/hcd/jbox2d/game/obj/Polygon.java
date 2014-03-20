@@ -66,6 +66,7 @@ public class Polygon {
 		bd.position.set(x, y);
 		bd.type = BodyType.DYNAMIC;
 		bd.angle = angle;
+		bd.allowSleep = true;
 		
 		//根据bodyDef创建物体到世界中
 		body = world.createBody(bd);

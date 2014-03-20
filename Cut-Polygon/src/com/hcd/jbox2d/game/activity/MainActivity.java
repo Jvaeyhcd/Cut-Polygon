@@ -26,6 +26,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -50,9 +51,9 @@ public class MainActivity extends Activity {
 	private Polygon polygon2;
 	private ArrayList<Polygon> polygons = new ArrayList<Polygon>();
 	private Line line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
-	private boolean iscut = false;
+	private boolean inScreen = false, outScreen = false;
+	private static int lineNum = 3;
 	//判断所有物体是否都静止
-	private boolean isStatic = true;
 
 	class Jbox2dView extends View {
 
@@ -122,19 +123,23 @@ public class MainActivity extends Activity {
 
 		@Override
 		public boolean onTouchEvent(MotionEvent event) {
-			if (isStatic) {
+			if (lineNum > 0) {
 				if (event.getAction() == MotionEvent.ACTION_MOVE) {// 如果拖动
 					line.setV2(new Vec2(event.getX(), event.getY()));
 					invalidate();
+					Log.d("触摸事件", "移动");
 				}
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {// 如果点击
 					line.setV1(new Vec2(event.getX(), event.getY()));
 					line.setV2(new Vec2(event.getX(), event.getY()));
 					invalidate();
+					inScreen = true;
+					Log.d("触摸事件", "点下屏幕");
 				}
 				if (event.getAction() == MotionEvent.ACTION_UP) {
 					line.setV2(new Vec2(event.getX(), event.getY()));
-					iscut = true;
+					outScreen = true;
+					Log.d("触摸事件", "离开屏幕");
 				}
 			}
 			return true;
@@ -181,11 +186,9 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public void run() {
-
-			if(iscut) {
+			if(inScreen && outScreen) {
 				ArrayList<Polygon> polytemp = new ArrayList<Polygon>();
 				for (int i = 0; i < polygons.size(); i++) {
-					isStatic = !polygons.get(i).getBody().isAwake();
 					Vec2[] temp = new Vec2[2];
 					temp[0] = new Vec2(line.getV1().x / RATE, line.getV1().y / RATE);
 					temp[1] = new Vec2(line.getV2().x / RATE, line.getV2().y / RATE);
@@ -211,7 +214,10 @@ public class MainActivity extends Activity {
 				}
 				polygons.clear();
 				polygons = polytemp;
-				iscut = false;
+				inScreen = false;
+				outScreen = false;
+				line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
+				lineNum--;
 			}
 			mHandler.postDelayed(cutloop, (long) timeStep * 1000);
 		}
@@ -258,12 +264,12 @@ public class MainActivity extends Activity {
 
 	private void createPolygon() {
 		Vec2[] vecs = new Vec2[4];
-		vecs[0] = new Vec2(screenWidth / 2 / RATE, 40 / RATE);
-		vecs[1] = new Vec2(-screenWidth / 2 / RATE, 40 / RATE);
-		vecs[2] = new Vec2(-screenWidth / 2 / RATE, -40 / RATE);
-		vecs[3] = new Vec2(screenWidth / 2 / RATE, -40 / RATE);
+		vecs[0] = new Vec2(screenWidth / 3 / RATE, 40 / RATE);
+		vecs[1] = new Vec2(-screenWidth / 3 / RATE, 40 / RATE);
+		vecs[2] = new Vec2(-screenWidth / 3 / RATE, -40 / RATE);
+		vecs[3] = new Vec2(screenWidth / 3 / RATE, -40 / RATE);
 		Vec2[] vecst = GrahamScanUtils.getGrahamScan(vecs);
-		polygon2 = new Polygon(world, 240 / RATE, 350 / RATE, vecst, vecst.length, 0.5f,
+		polygon2 = new Polygon(world, 240 / RATE, 350 / RATE, vecst, vecst.length, 0.7f,
 				0.5f, 1.0f, 0.0f);
 		polygons.add(polygon2);
 	}
