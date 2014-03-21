@@ -110,6 +110,7 @@ public class MainActivity extends Activity {
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
 			this.canvas = canvas;
+			setBackgroundColor(Color.WHITE);
 			drawPlatform(m_platform.getPosition().x, m_platform.getPosition().y
 					- 10 / RATE, screenWidth / 2, 20);
 			
@@ -187,6 +188,7 @@ public class MainActivity extends Activity {
 		@Override
 		public void run() {
 			if(inScreen && outScreen) {
+				boolean isCut = false;
 				ArrayList<Polygon> polytemp = new ArrayList<Polygon>();
 				for (int i = 0; i < polygons.size(); i++) {
 					Vec2[] temp = new Vec2[2];
@@ -194,6 +196,7 @@ public class MainActivity extends Activity {
 					temp[1] = new Vec2(line.getV2().x / RATE, line.getV2().y / RATE);
 					if ((CutPolygonUtils.getLeftCutPolygon(polygons.get(i).getNowVecs(), temp) != null) && 
 							(CutPolygonUtils.getRightCutPolygon(polygons.get(i).getNowVecs(), temp) != null)) {
+						isCut = true;
 						//物体被切成两块后，应该先去除之前创建在世界中的物体
 						world.destroyBody(polygons.get(i).getBody());
 						Vec2[] left = CutPolygonUtils.getLeftCutPolygon(polygons.get(i).getNowVecs(), temp);
@@ -217,7 +220,7 @@ public class MainActivity extends Activity {
 				inScreen = false;
 				outScreen = false;
 				line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
-				lineNum--;
+				if (isCut) lineNum--;
 			}
 			mHandler.postDelayed(cutloop, (long) timeStep * 1000);
 		}
@@ -264,12 +267,12 @@ public class MainActivity extends Activity {
 
 	private void createPolygon() {
 		Vec2[] vecs = new Vec2[4];
-		vecs[0] = new Vec2(screenWidth / 3 / RATE, 40 / RATE);
-		vecs[1] = new Vec2(-screenWidth / 3 / RATE, 40 / RATE);
-		vecs[2] = new Vec2(-screenWidth / 3 / RATE, -40 / RATE);
-		vecs[3] = new Vec2(screenWidth / 3 / RATE, -40 / RATE);
+		vecs[0] = new Vec2(screenWidth / 3 / RATE, (screenHeight - 10) / 6 / RATE);
+		vecs[1] = new Vec2(-screenWidth / 3 / RATE, (screenHeight - 10) / 6 / RATE);
+		vecs[2] = new Vec2(-screenWidth / 3 / RATE, -(screenHeight - 10) / 6 / RATE);
+		vecs[3] = new Vec2(screenWidth / 3 / RATE, -(screenHeight - 10) / 6 / RATE);
 		Vec2[] vecst = GrahamScanUtils.getGrahamScan(vecs);
-		polygon2 = new Polygon(world, 240 / RATE, 350 / RATE, vecst, vecst.length, 0.7f,
+		polygon2 = new Polygon(world, screenWidth / 3 / RATE, (screenHeight - 10) / 3 / RATE, vecst, vecst.length, 0.7f,
 				0.5f, 1.0f, 0.0f);
 		polygons.add(polygon2);
 	}
