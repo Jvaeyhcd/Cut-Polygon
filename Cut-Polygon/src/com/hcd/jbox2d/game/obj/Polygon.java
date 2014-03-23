@@ -44,7 +44,6 @@ public class Polygon {
 		this.density = density;
 		this.angle = angle;
 		this.edge = edge;
-		Log.i("Polygon", x + "," + y);
 		createBody();
 	}
 	/**
