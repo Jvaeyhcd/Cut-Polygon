@@ -34,6 +34,8 @@ import android.view.WindowManager;
 
 public class MainActivity extends Activity {
 
+	//过关百分比
+	private static float PASSSCORE = 0.7f;
 	//物理屏幕与物理世界的比例px/m
 	private final static int RATE = 60;
 	private World world;
@@ -48,11 +50,17 @@ public class MainActivity extends Activity {
 	private Polygon polygon2;
 	private ArrayList<Polygon> polygons = new ArrayList<Polygon>();
 	private Line line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
-	private boolean inScreen = false, outScreen = false;
+	private boolean inScreen, outScreen;
 	private static int lineNum = 3;
 	private Platform platform;
 	//判断所有物体是否都静止
-
+	private boolean isSleeping;
+	//游戏所得分数的百分比
+	private float score;
+	//初始物体的质量
+	private float initArea;
+	private float cutArea;
+	
 	class Jbox2dView extends View {
 
 		private Canvas canvas;
@@ -156,6 +164,10 @@ public class MainActivity extends Activity {
 	 * 初始化游戏
 	 */
 	private void initGame() {
+		inScreen = false;
+		outScreen = false;
+		isSleeping = true;
+		cutArea = 0.0f;
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // 去title
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);// 全屏
@@ -229,9 +241,14 @@ public class MainActivity extends Activity {
 				line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
 				if (isCut) lineNum--;
 			}
+			//判断物体是否调出屏幕外面以及物体是否停止运动
+			isSleeping = true;
 			{
 				ArrayList<Polygon> temp_poly = new ArrayList<Polygon>();
 				for (int i = 0; i < polygons.size(); i++) {
+					if (polygons.get(i).getBody().isAwake()) {
+						isSleeping = false;
+					}
 					Vec2[] vecs = polygons.get(i).getNowVecs();
 					boolean out_screen = true;
 					for (int j = 0; j < vecs.length; j++) {
@@ -242,11 +259,19 @@ public class MainActivity extends Activity {
 					if (!out_screen) {
 						temp_poly.add(polygons.get(i));
 					} else {
-						Log.i("调出屏幕了", i+"没有睡眠了");
+						cutArea += polygons.get(i).getMass();
+						Log.i("掉出屏幕了","cutArea / initArea=" + cutArea / initArea);
 					}
 				}
 				polygons.clear();
 				polygons = temp_poly;
+			}
+			if (isSleeping && lineNum <= 0) {
+				Log.i("游戏状态", "游戏结束" + cutArea / initArea);
+				if (PASSSCORE <= cutArea / initArea) {
+					//游戏过关
+					Log.i("游戏结果", "过关");
+				}
 			}
 			mHandler.postDelayed(cutloop, (long) timeStep * 1000);
 		}
@@ -305,6 +330,7 @@ public class MainActivity extends Activity {
 		Vec2[] vecst = GrahamScanUtils.getGrahamScan(vecs);
 		polygon2 = new Polygon(world, screenWidth / 3 / RATE, (screenHeight) / 3 / RATE, vecst, vecst.length, 0.0f,
 				0.5f, 1.0f, 0.0f);
+		initArea = polygon2.getMass();
 		polygons.add(polygon2);
 	}
 	

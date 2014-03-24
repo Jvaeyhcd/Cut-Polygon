@@ -8,9 +8,8 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
+import com.hcd.jbox2d.game.utils.PolygonAreaUtils;
 import com.hcd.jbox2d.game.utils.PolygonCenterUtils;
-
-import android.util.Log;
 
 /**
  * 定义一个多边形的类
@@ -34,6 +33,10 @@ public class Polygon {
 	//自定义多边形物体的边数
 	private int edge;
 	private Body body;
+		
+	public float getMass() {
+		return PolygonAreaUtils.getPolygonArea(vecs);
+	}
 	
 	public Polygon(World world, float x, float y, Vec2[] vecs, int edge,  float restitution, float density, float friction, float angle) {
 		this.world = world;
@@ -66,6 +69,7 @@ public class Polygon {
 		bd.type = BodyType.DYNAMIC;
 		bd.angle = angle;
 		bd.allowSleep = true;
+		bd.setAwake(true);
 		
 		//根据bodyDef创建物体到世界中
 		body = world.createBody(bd);
