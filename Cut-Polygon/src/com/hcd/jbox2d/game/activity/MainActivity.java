@@ -117,7 +117,6 @@ public class MainActivity extends Activity {
 			this.canvas = canvas;
 			setBackgroundColor(Color.WHITE);
 			drawPlatform();
-			
 			for (int i = 0; i < polygons.size(); i++){
 				drawPolygon(polygons.get(i));
 			}

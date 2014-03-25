@@ -4,5 +4,7 @@
     <string name="app_name">Cut-Polygon</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="title_activity_home">HomeActivity</string>
+	<string name="info">A game by CD Huang</string>
+	<string name="play">Play</string>
 </resources>
