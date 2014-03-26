@@ -53,4 +53,15 @@ public class HomeActivity extends Activity {
 		super.onResume();
 	}
 
+//	@Override
+//	protected void onResume() {
+//
+//		/**
+//		 * 强制变成横屏，不能变成竖屏
+//		 */
+//		if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+//			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//		}
+//		super.onResume();
+//	}
 }

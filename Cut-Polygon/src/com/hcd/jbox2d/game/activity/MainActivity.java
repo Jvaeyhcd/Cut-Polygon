@@ -24,6 +24,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -31,11 +32,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 
 	//过关百分比
-	private static float PASSSCORE = 0.7f;
+	private static float PASSSCORE = 0.4f;
 	//物理屏幕与物理世界的比例px/m
 	private final static int RATE = 60;
 	private World world;
@@ -56,7 +58,7 @@ public class MainActivity extends Activity {
 	//判断所有物体是否都静止
 	private boolean isSleeping;
 	//游戏所得分数的百分比
-	private float score;
+	private int removed;
 	//初始物体的质量
 	private float initArea;
 	private float cutArea;
@@ -111,6 +113,27 @@ public class MainActivity extends Activity {
 			canvas.drawPath(path, paint);
 		}
 
+		private void setScore() {
+			paint.setTypeface(Typeface.SANS_SERIF);
+			paint.setTextSize(20);
+			canvas.drawText("Removed:" + removed+"%", 10 , screenHeight - 10, paint);
+			canvas.drawText("Target:" + (int)Math.round(PASSSCORE*100)+"%" , 150, screenHeight - 10, paint);
+			if (removed >= PASSSCORE * 100 && lineNum <= 0) {
+				canvas.drawText("SUCCESS!", screenWidth - 100, 30, paint);
+			} else {
+				if (lineNum == 3) {
+					canvas.drawLine(screenWidth - 20, 10, screenWidth - 30, 30, paint);
+					canvas.drawLine(screenWidth - 30, 10, screenWidth - 40, 30, paint);
+					canvas.drawLine(screenWidth - 40, 10, screenWidth - 50, 30, paint);
+				} else if (lineNum == 2) {
+					canvas.drawLine(screenWidth - 20, 10, screenWidth - 30, 30, paint);
+					canvas.drawLine(screenWidth - 30, 10, screenWidth - 40, 30, paint);
+				} else if(lineNum == 1) {
+					canvas.drawLine(screenWidth - 20, 10, screenWidth - 30, 30, paint);
+				}
+			}
+		}
+		
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
@@ -123,6 +146,7 @@ public class MainActivity extends Activity {
 			if (line != null) {
 				drawLine(line.getV1().x, line.getV1().y, line.getV2().x, line.getV2().y);
 			}
+			setScore();
 		}
 
 		@Override
@@ -163,6 +187,7 @@ public class MainActivity extends Activity {
 	 * 初始化游戏
 	 */
 	private void initGame() {
+		removed = 0;
 		inScreen = false;
 		outScreen = false;
 		isSleeping = true;
@@ -260,6 +285,7 @@ public class MainActivity extends Activity {
 					} else {
 						cutArea += polygons.get(i).getMass();
 						Log.i("掉出屏幕了","cutArea / initArea=" + cutArea / initArea);
+						removed = (int) Math.rint((cutArea / initArea) * 100);
 					}
 				}
 				polygons.clear();
@@ -344,12 +370,11 @@ public class MainActivity extends Activity {
 	protected void onResume() {
 
 		/**
-		 * 强制变成竖屏，不能变成横屏
+		 * 强制变成横屏，不能变成竖屏
 		 */
-		if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 		super.onResume();
 	}
-
 }

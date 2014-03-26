@@ -7,4 +7,7 @@
     <string name="title_activity_home">HomeActivity</string>
 	<string name="info">A game by CD Huang</string>
 	<string name="play">Play</string>
+	<string name="retry">Retry</string>
+	<string name="next">Next</string>
+	<string name="level">Level</string>
 </resources>
