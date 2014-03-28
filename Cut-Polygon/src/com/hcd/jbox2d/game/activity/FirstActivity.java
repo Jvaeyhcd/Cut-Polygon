@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -29,12 +30,12 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
-public class MainActivity extends Activity {
+public class FirstActivity extends Activity {
 
 	//过关百分比
 	private static float PASSSCORE = 0.4f;
@@ -296,6 +297,7 @@ public class MainActivity extends Activity {
 				if (PASSSCORE <= cutArea / initArea) {
 					//游戏过关
 					Log.i("游戏结果", "过关");
+					goToNextStage();
 				}
 			}
 			mHandler.postDelayed(cutloop, (long) timeStep * 1000);
@@ -357,6 +359,16 @@ public class MainActivity extends Activity {
 				0.5f, 1.0f, 0.0f);
 		initArea = polygon2.getMass();
 		polygons.add(polygon2);
+	}
+	
+	private void goToNextStage() {
+		Intent intent = new Intent();
+		// 设置Intent的源地址和目标地址
+		intent.setClass(getApplicationContext(), SecondActivity.class);
+		// 调用startActivity方法发送意图给系统
+		startActivity(intent);
+		//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
+		FirstActivity.this.finish();
 	}
 	
 	@Override

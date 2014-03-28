@@ -14,9 +14,11 @@
         android:label="@string/app_name"
         android:theme="@style/NoTitleBar" >
         <activity
-            android:name="com.hcd.jbox2d.game.activity.MainActivity"
+            android:name="com.hcd.jbox2d.game.activity.FirstActivity"
             android:label="@string/app_name" >
-            
+        </activity>
+        <activity 
+            android:name="com.hcd.jbox2d.game.activity.SecondActivity">
         </activity>
         <activity
             android:name="com.hcd.jbox2d.game.activity.HomeActivity"
