@@ -38,7 +38,7 @@ import android.widget.Button;
 public class FirstActivity extends Activity {
 
 	//过关百分比
-		private static float PASSSCORE = 0.4f;
+		private static float PASSSCORE = 1.0f;
 		//物理屏幕与物理世界的比例px/m
 		private final static int RATE = 60;
 		private World world;
@@ -207,7 +207,7 @@ public class FirstActivity extends Activity {
 			Vec2 gravity = new Vec2(0.0f, 10.0f); // 向量，用来标示当前世界的重力方向，第一个参数为水平方向，负数为做，正数为右。第二个参数表示垂直方向
 			world = new World(gravity);
 			createPlatform(0, screenHeight / 2, screenWidth / 2, 10);
-			createBorder(false, true, false, false);
+			createBorder(false, false, false, false);
 			createPolygon();
 			myView = new Jbox2dView(this);
 			timeStep = 1.0f / 60.0f; // 定义频率
@@ -308,20 +308,7 @@ public class FirstActivity extends Activity {
 
 
 		private void createPlatform(float x, float y, float width, float height) {
-//												
-//				PolygonShape ps = new PolygonShape();
-//				// 设置成矩形，注意这里是两个参数分别是此矩形长宽的一半
-//				ps.setAsBox(width / RATE, height / RATE);
-//				FixtureDef fd = new FixtureDef();
-//				fd.friction = 1.0f;
-//				fd.restitution = 0.5f;
-//				fd.shape = ps;
-	//
-//				BodyDef bd = new BodyDef();
-//				bd.position = new Vec2(x / RATE, y / RATE);
-//				m_platform = world.createBody(bd);
-//				m_platform.createFixture(fd);
-			platform = new Platform(world, screenWidth / 6 / RATE, screenHeight / 2 / RATE, screenWidth / 2 / RATE, screenHeight * 9 / 16 / RATE);
+			platform = new Platform(world, screenWidth * 3 / 8 / RATE, screenHeight * 5 / 6 / RATE, screenWidth * 5 / 8 / RATE, screenHeight * 7 / 8 / RATE);
 		}
 
 
@@ -352,12 +339,12 @@ public class FirstActivity extends Activity {
 
 		private void createPolygon() {
 			Vec2[] vecs = new Vec2[4];
-			vecs[0] = new Vec2(screenWidth / 3 / RATE, (screenHeight) / 6 / RATE);
-			vecs[1] = new Vec2(-screenWidth / 3 / RATE, (screenHeight) / 6 / RATE);
-			vecs[2] = new Vec2(-screenWidth / 3 / RATE, -(screenHeight) / 6 / RATE);
-			vecs[3] = new Vec2(screenWidth / 3 / RATE, -(screenHeight) / 6 / RATE);
+			vecs[0] = new Vec2(screenWidth / 5 / RATE, (screenHeight) / 3 / RATE);
+			vecs[1] = new Vec2(-screenWidth / 5 / RATE, (screenHeight) / 3 / RATE);
+			vecs[2] = new Vec2(-screenWidth / 5 / RATE, -(screenHeight) / 3 / RATE);
+			vecs[3] = new Vec2(screenWidth / 5 / RATE, -(screenHeight) / 3 / RATE);
 			Vec2[] vecst = GrahamScanUtils.getGrahamScan(vecs);
-			polygon2 = new Polygon(world, screenWidth / 3 / RATE, (screenHeight) / 3 / RATE, vecst, vecst.length, 0.0f,
+			polygon2 = new Polygon(world, screenWidth / 2 / RATE, (screenHeight) / 2 / RATE, vecst, vecst.length, 0.0f,
 					0.5f, 1.0f, 0.0f);
 			initArea = polygon2.getMass();
 			polygons.add(polygon2);

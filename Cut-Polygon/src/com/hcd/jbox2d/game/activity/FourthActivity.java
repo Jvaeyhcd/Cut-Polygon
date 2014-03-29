@@ -32,11 +32,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
-public class SecondActivity extends Activity {
+public class FourthActivity extends Activity
+{
 	//过关百分比
-	private static float PASSSCORE = 0.4f;
+	private static float PASSSCORE = 1.0f;
 	//物理屏幕与物理世界的比例px/m
 	private final static int RATE = 60;
 	private World world;
@@ -304,18 +304,23 @@ public class SecondActivity extends Activity {
 
 
 	private void createPlatform() {
-		platform = new Platform(world, screenWidth / 8 / RATE, screenHeight * 3 / 4 / RATE, screenWidth / 2 / RATE, screenHeight * 13 / 16 / RATE);
+		platform = new Platform(world, screenWidth * 3 / 16 / RATE, screenHeight * 9 / 10 / RATE, screenWidth / 4 / RATE, screenHeight * 19 / 20 / RATE);
 		platforms.add(platform);
-		platform = new Platform(world, screenWidth * 2 / 3 / RATE, screenHeight * 3 / 4  / RATE, screenWidth * 5 / 6 / RATE, screenHeight * 13 / 16 / RATE);
+		platform = new Platform(world, screenWidth * 3 / 8 / RATE, screenHeight * 9 / 10 / RATE, screenWidth * 7 / 16 / RATE, screenHeight * 19 / 20 / RATE);
 		platforms.add(platform);
-		platform = new Platform(world, screenWidth / 16 / RATE, screenHeight * 1 / 2 / RATE, screenWidth / 8 / RATE, screenHeight * 15 / 16 / RATE);
+		platform = new Platform(world, (screenWidth * 3 / 32) / RATE, screenHeight * 1 / 6  / RATE, screenWidth / 8 / RATE, screenHeight / 4 / RATE);
 		platforms.add(platform);
-		platform = new Platform(world, screenWidth * 5 / 6 / RATE, screenHeight * 5 / 13 / RATE, screenWidth * 11 / 12 / RATE, screenHeight * 13 / 16 / RATE);
+		platform = new Platform(world, (screenWidth / 2 + 2) / RATE, screenHeight * 1 / 6  / RATE, screenWidth * 17 / 32 / RATE, screenHeight / 4 / RATE);
+		platforms.add(platform);
+		platform = new Platform(world, (screenWidth * 3 / 32) / RATE, screenHeight * 1 / 2  / RATE, screenWidth / 8 / RATE, screenHeight * 7 / 12 / RATE);
+		platforms.add(platform);
+		platform = new Platform(world, (screenWidth / 2 + 2) / RATE, screenHeight * 1 / 2  / RATE, screenWidth * 17 / 32 / RATE, screenHeight * 7 / 12 / RATE);
 		platforms.add(platform);
 	}
 
 
 	private void createBorder(boolean top,boolean left, boolean bottom, boolean right) {
+		
 
 		BodyDef bd = new BodyDef();
 		Body border = world.createBody(bd);
@@ -341,19 +346,13 @@ public class SecondActivity extends Activity {
 	}
 
 	private void createPolygon() {
-		//正六边形物体
-		Vec2[] vecs = new Vec2[6];
-//		vecs[0] = new Vec2(screenWidth / 8 / RATE, (screenHeight) / 4 / RATE);
-		float startX = (float) (((screenWidth) / 7 / RATE) * Math.cos(Math.PI / 6));
-		float startY = (float) (((screenWidth) / 7 / RATE) * Math.sin(Math.PI / 6));
-		int edge = vecs.length;
-		for (int i = 0; i < edge; i++) {
-			float vecX = (float) (startX * Math.cos(2 * i * Math.PI / edge) - startY * Math.sin(2 * i * Math.PI / edge));
-			float vecY = (float) (startX * Math.sin(2 * i * Math.PI / edge) + startY * Math.cos(2 * i * Math.PI / edge));
-			vecs[i] = new Vec2(vecX, vecY);
-		}
+		Vec2[] vecs = new Vec2[4];
+		vecs[0] = new Vec2(screenWidth * 3 / 16 / RATE, (screenHeight) * 2 / 5 / RATE);
+		vecs[1] = new Vec2(-screenWidth * 3 / 16 / RATE, (screenHeight) * 2 / 5 / RATE);
+		vecs[2] = new Vec2(-screenWidth * 3 / 16 / RATE, -(screenHeight) * 2 / 5 / RATE);
+		vecs[3] = new Vec2(screenWidth * 3 / 16 / RATE, -(screenHeight) * 2 / 5 / RATE);
 		Vec2[] vecst = GrahamScanUtils.getGrahamScan(vecs);
-		polygon2 = new Polygon(world, screenWidth * 7 / 12 / RATE, (screenHeight) / 2 / RATE, vecst, vecst.length, 0.0f,
+		polygon2 = new Polygon(world, screenWidth * 5 / 16 / RATE, (screenHeight) / 2 / RATE, vecst, vecst.length, 0.0f,
 				0.5f, 1.0f, 0.0f);
 		initArea = polygon2.getMass();
 		polygons.add(polygon2);
@@ -361,14 +360,12 @@ public class SecondActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
 	@Override
 	protected void onResume() {
-
 		/**
 		 * 强制变成横屏，不能变成竖屏
 		 */
