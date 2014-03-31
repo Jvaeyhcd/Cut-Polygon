@@ -26,6 +26,8 @@
         <activity 
             android:name="com.hcd.jbox2d.game.activity.FourthActivity">
         </activity>
+        <activity 
+            android:name="com.hcd.jbox2d.game.activity.LevelActivity"></activity>
         <activity
             android:name="com.hcd.jbox2d.game.activity.HomeActivity"
             android:label="@string/title_activity_home" >

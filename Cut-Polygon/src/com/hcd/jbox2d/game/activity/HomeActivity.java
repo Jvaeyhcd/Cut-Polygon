@@ -26,7 +26,7 @@ public class HomeActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				// 设置Intent的源地址和目标地址
-				intent.setClass(getApplicationContext(), FourthActivity.class);
+				intent.setClass(getApplicationContext(), LevelActivity.class);
 				// 调用startActivity方法发送意图给系统
 				startActivity(intent);
 				//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
@@ -47,8 +47,8 @@ public class HomeActivity extends Activity {
 		/**
 		 * 强制变成竖屏，不能变成横屏
 		 */
-		if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		}
 		super.onResume();
 	}

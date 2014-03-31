@@ -5,9 +5,16 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_home">HomeActivity</string>
-	<string name="info">A game by CD Huang</string>
-	<string name="play">Play</string>
-	<string name="retry">Retry</string>
-	<string name="next">Next</string>
-	<string name="level">Level</string>
+    <string name="info">A game by CD Huang</string>
+    <string name="play">Play</string>
+    <string name="retry">Retry</string>
+    <string name="next">Next</string>
+    <string name="level">Level</string>
+    <string name="title_activity_level">LevelActivity</string>
+    <string name="Lev1">Lev1</string>
+    <string name="Lev2">Lev2</string>
+    <string name="Lev3">Lev3</string>
+    <string name="Lev4">Lev4</string>
+    <string name="title_activity_first">FirstActivity</string>
+
 </resources>
