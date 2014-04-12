@@ -11,23 +11,20 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/level"
         android:theme="@style/NoTitleBar" >
         <activity
             android:name="com.hcd.jbox2d.game.activity.FirstActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity 
-            android:name="com.hcd.jbox2d.game.activity.SecondActivity">
+        <activity android:name="com.hcd.jbox2d.game.activity.SecondActivity" >
         </activity>
-        <activity 
-            android:name="com.hcd.jbox2d.game.activity.ThirdActivity">
+        <activity android:name="com.hcd.jbox2d.game.activity.ThirdActivity" >
         </activity>
-        <activity 
-            android:name="com.hcd.jbox2d.game.activity.FourthActivity">
+        <activity android:name="com.hcd.jbox2d.game.activity.FourthActivity" >
         </activity>
-        <activity 
-            android:name="com.hcd.jbox2d.game.activity.LevelActivity"></activity>
+        <activity android:name="com.hcd.jbox2d.game.activity.LevelActivity" >
+        </activity>
         <activity
             android:name="com.hcd.jbox2d.game.activity.HomeActivity"
             android:label="@string/title_activity_home" >
@@ -35,6 +32,28 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.hcd.jbox2d.game.activity.TestActivity"
+            android:label="@string/title_activity_test" >
+        </activity>
+        <activity
+            android:name="com.hcd.jbox2d.game.activity.Stage1Activity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/title_activity_first_stage"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name="com.hcd.jbox2d.game.activity.Stage2Activity"
+            android:label="@string/title_activity_stage2" >
+        </activity>
+        <activity
+            android:name="com.hcd.jbox2d.game.activity.Stage3Activity"
+            android:label="@string/title_activity_stage3" >
+        </activity>
+        <activity
+            android:name="com.hcd.jbox2d.game.activity.Stage4Activity"
+            android:label="@string/title_activity_stage4" >
         </activity>
     </application>
 

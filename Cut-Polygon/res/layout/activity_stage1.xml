@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".Stage1Activity" >
+
+    <com.hcd.jbox2d.game.view.Stage1View
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="0dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Stage1"
+        android:textColor="#FF00FF" />
+
+    <Button
+        android:id="@+id/optionsstage1"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="optionsClick"
+        android:text="@string/options" />
+
+    <Button
+        android:id="@+id/homestage1"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_above="@+id/optionsstage1"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="showAlertDialog"
+        android:text="@string/home"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/nextstage1"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_above="@+id/homestage1"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="showAlertDialog"
+        android:text="@string/next" 
+        android:visibility="invisible"/>
+
+    <Button
+        android:id="@+id/retrystage1"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_above="@+id/nextstage1"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="retryClick"
+        android:text="@string/retry" 
+        android:visibility="invisible"/>
+
+</RelativeLayout>

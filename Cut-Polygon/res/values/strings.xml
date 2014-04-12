@@ -7,8 +7,6 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="info">A game by CD Huang</string>
     <string name="play">Play</string>
-    <string name="retry">Retry</string>
-    <string name="next">Next</string>
     <string name="level">Level</string>
     <string name="title_activity_level">LevelActivity</string>
     <string name="Lev1">Lev1</string>
@@ -16,5 +14,20 @@
     <string name="Lev3">Lev3</string>
     <string name="Lev4">Lev4</string>
     <string name="title_activity_first">FirstActivity</string>
-
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_first_stage">FirstStageActivity</string>
+    <string name="Stage1">Stage 1</string>
+    <string name="title_activity_stage2">Stage2Activity</string>
+    <string name="Stage2">Stage 2</string>
+    <string name="Stage3">Stage 3</string>
+    <string name="Stage4">Stage 4</string>
+    <string name="title_activity_stage3">Stage3Activity</string>
+    <string name="title_activity_stage4">Stage4Activity</string>
+    <string name="title_alert">提示信息</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="options">Options</string>
+    <string name="home">Home</string>
+    <string name="retry">Retry</string>
+    <string name="next">Next</string>
 </resources>

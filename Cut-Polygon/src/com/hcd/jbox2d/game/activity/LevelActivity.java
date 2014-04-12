@@ -31,7 +31,7 @@ public class LevelActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				// 设置Intent的源地址和目标地址
-				intent.setClass(getApplicationContext(), FirstActivity.class);
+				intent.setClass(getApplicationContext(), Stage1Activity.class);
 				// 调用startActivity方法发送意图给系统
 				startActivity(intent);
 				//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
@@ -44,7 +44,7 @@ public class LevelActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				// 设置Intent的源地址和目标地址
-				intent.setClass(getApplicationContext(), SecondActivity.class);
+				intent.setClass(getApplicationContext(), Stage2Activity.class);
 				// 调用startActivity方法发送意图给系统
 				startActivity(intent);
 				//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
@@ -57,7 +57,7 @@ public class LevelActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				// 设置Intent的源地址和目标地址
-				intent.setClass(getApplicationContext(), ThirdActivity.class);
+				intent.setClass(getApplicationContext(), Stage3Activity.class);
 				// 调用startActivity方法发送意图给系统
 				startActivity(intent);
 				//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
@@ -70,7 +70,7 @@ public class LevelActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				// 设置Intent的源地址和目标地址
-				intent.setClass(getApplicationContext(), FourthActivity.class);
+				intent.setClass(getApplicationContext(), Stage4Activity.class);
 				// 调用startActivity方法发送意图给系统
 				startActivity(intent);
 				//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
