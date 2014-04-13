@@ -5,6 +5,7 @@
     tools:context=".Stage1Activity" >
 
     <com.hcd.jbox2d.game.view.Stage1View
+        android:id="@+id/stage1View"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginLeft="0dp" />
@@ -34,7 +35,7 @@
         android:layout_above="@+id/optionsstage1"
         android:layout_alignParentRight="true"
         android:background="@drawable/btn_ok_selector"
-        android:onClick="showAlertDialog"
+        android:onClick="homeClick"
         android:text="@string/home"
         android:visibility="invisible" />
 
@@ -45,7 +46,7 @@
         android:layout_above="@+id/homestage1"
         android:layout_alignParentRight="true"
         android:background="@drawable/btn_ok_selector"
-        android:onClick="showAlertDialog"
+        android:onClick="nextClick"
         android:text="@string/next" 
         android:visibility="invisible"/>
 

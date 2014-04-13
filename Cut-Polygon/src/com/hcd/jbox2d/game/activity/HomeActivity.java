@@ -1,5 +1,7 @@
 package com.hcd.jbox2d.game.activity;
 
+import com.hcd.jbox2d.game.obj.ExitApplication;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,6 +35,7 @@ public class HomeActivity extends Activity {
 				HomeActivity.this.finish();
 			}
 		});
+		ExitApplication.getInstance().addActivity(this);
 	}
 
 	@Override

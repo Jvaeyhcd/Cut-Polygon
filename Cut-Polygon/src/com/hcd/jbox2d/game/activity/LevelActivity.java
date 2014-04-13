@@ -1,8 +1,11 @@
 package com.hcd.jbox2d.game.activity;
 
+import com.hcd.jbox2d.game.obj.ExitApplication;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
@@ -77,8 +80,21 @@ public class LevelActivity extends Activity {
 				LevelActivity.this.finish();
 			}
 		});
+		ExitApplication.getInstance().addActivity(this);
 	}
+	
+	@Override
+	protected void onResume() {
 
+		/**
+		 * 强制变成横屏，不能变成竖屏
+		 */
+		if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		}
+		super.onResume();
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

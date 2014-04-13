@@ -13,5 +13,47 @@
         android:layout_height="wrap_content"
         android:text="@string/Stage3" 
         android:textColor="#FF00FF" />
+    <Button
+        android:id="@+id/optionsstage3"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="optionsClick"
+        android:text="@string/options" />
+
+    <Button
+        android:id="@+id/homestage3"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_above="@+id/optionsstage3"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="homeClick"
+        android:text="@string/home"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/nextstage3"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_above="@+id/homestage3"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="nextClick"
+        android:text="@string/next"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/retrystage3"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_above="@+id/nextstage3"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="retryClick"
+        android:text="@string/retry"
+        android:visibility="invisible" />
 
 </RelativeLayout>

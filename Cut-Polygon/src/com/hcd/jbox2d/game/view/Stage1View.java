@@ -8,6 +8,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
+import com.hcd.jbox2d.game.activity.Stage1Activity;
 import com.hcd.jbox2d.game.obj.Line;
 import com.hcd.jbox2d.game.obj.Platform;
 import com.hcd.jbox2d.game.obj.Polygon;
@@ -176,8 +177,8 @@ public class Stage1View extends View {
 		cutArea = 0.0f;
 		
 		gameView = this;
-		screenWidth = 800;
-		screenHeight = 480;
+		screenWidth = Stage1Activity.screenWidth;//800;
+		screenHeight = Stage1Activity.screenHeight;//480;
 		
 		Vec2 gravity = new Vec2(0.0f, 10.0f); // 向量，用来标示当前世界的重力方向，第一个参数为水平方向，负数为做，正数为右。第二个参数表示垂直方向
 		world = new World(gravity);
@@ -196,10 +197,12 @@ public class Stage1View extends View {
 
 		@Override
 		public void run() {
-			if (!gameOver){
-				world.step(timeStep, iterations, iterations);
-				gameView.invalidate();
-				mHandler.postDelayed(update, (long) timeStep * 1000);
+			synchronized (this) {
+				if (!gameOver){
+					world.step(timeStep, iterations, iterations);
+					gameView.invalidate();
+					mHandler.postDelayed(update, (long) timeStep * 1000);
+				}
 			}
 		}
 	};
@@ -208,42 +211,44 @@ public class Stage1View extends View {
 		
 		@Override
 		public void run() {
-			
-			if(inScreen && outScreen && !gameOver) {
-				boolean isCut = false;
-				ArrayList<Polygon> polytemp = new ArrayList<Polygon>();
-				for (int i = 0; i < polygons.size(); i++) {
-					Vec2[] temp = new Vec2[2];
-					temp[0] = new Vec2(line.getV1().x / RATE, line.getV1().y / RATE);
-					temp[1] = new Vec2(line.getV2().x / RATE, line.getV2().y / RATE);
-					if ((CutPolygonUtils.getLeftCutPolygon(polygons.get(i).getNowVecs(), temp) != null) && 
-							(CutPolygonUtils.getRightCutPolygon(polygons.get(i).getNowVecs(), temp) != null)) {
-						isCut = true;
-						//物体被切成两块后，应该先去除之前创建在世界中的物体
-						world.destroyBody(polygons.get(i).getBody());
-						Vec2[] left = CutPolygonUtils.getLeftCutPolygon(polygons.get(i).getNowVecs(), temp);
-						float x = PolygonCenterUtils.getPolygonCenter(left).x;
-						float y = PolygonCenterUtils.getPolygonCenter(left).y;
-						left = PolygonCenterUtils.getStandardPolygon(left);
-						Polygon pleft = new Polygon(world, x, y, left, left.length, 0.1f, 0.1f, 1.0f, 0.0f);
-						Vec2[] right = CutPolygonUtils.getRightCutPolygon(polygons.get(i).getNowVecs(), temp);
-						x = PolygonCenterUtils.getPolygonCenter(right).x;
-						y = PolygonCenterUtils.getPolygonCenter(right).y;
-						right = PolygonCenterUtils.getStandardPolygon(right);
-						Polygon pright = new Polygon(world, x, y, right, right.length, 0.1f, 0.1f, 1.0f, 0.0f);
-						polytemp.add(pright);
-						polytemp.add(pleft);
-					} else {
-						polytemp.add(polygons.get(i));
+			synchronized (this) {
+				if(inScreen && outScreen && !gameOver) {
+					boolean isCut = false;
+					ArrayList<Polygon> polytemp = new ArrayList<Polygon>();
+					for (int i = 0; i < polygons.size(); i++) {
+						Vec2[] temp = new Vec2[2];
+						temp[0] = new Vec2(line.getV1().x / RATE, line.getV1().y / RATE);
+						temp[1] = new Vec2(line.getV2().x / RATE, line.getV2().y / RATE);
+						if ((CutPolygonUtils.getLeftCutPolygon(polygons.get(i).getNowVecs(), temp) != null) && 
+								(CutPolygonUtils.getRightCutPolygon(polygons.get(i).getNowVecs(), temp) != null)) {
+							isCut = true;
+							//物体被切成两块后，应该先去除之前创建在世界中的物体
+							world.destroyBody(polygons.get(i).getBody());
+							Vec2[] left = CutPolygonUtils.getLeftCutPolygon(polygons.get(i).getNowVecs(), temp);
+							float x = PolygonCenterUtils.getPolygonCenter(left).x;
+							float y = PolygonCenterUtils.getPolygonCenter(left).y;
+							left = PolygonCenterUtils.getStandardPolygon(left);
+							Polygon pleft = new Polygon(world, x, y, left, left.length, 0.1f, 0.1f, 1.0f, 0.0f);
+							Vec2[] right = CutPolygonUtils.getRightCutPolygon(polygons.get(i).getNowVecs(), temp);
+							x = PolygonCenterUtils.getPolygonCenter(right).x;
+							y = PolygonCenterUtils.getPolygonCenter(right).y;
+							right = PolygonCenterUtils.getStandardPolygon(right);
+							Polygon pright = new Polygon(world, x, y, right, right.length, 0.1f, 0.1f, 1.0f, 0.0f);
+							polytemp.add(pright);
+							polytemp.add(pleft);
+						} else {
+							polytemp.add(polygons.get(i));
+						}
 					}
+					polygons.clear();
+					polygons = polytemp;
+					inScreen = false;
+					outScreen = false;
+					line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
+					if (isCut) lineNum--;
 				}
-				polygons.clear();
-				polygons = polytemp;
-				inScreen = false;
-				outScreen = false;
-				line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
-				if (isCut) lineNum--;
 			}
+			
 			//判断物体是否调出屏幕外面以及物体是否停止运动
 			isSleeping = true;
 			{

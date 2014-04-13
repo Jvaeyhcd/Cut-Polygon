@@ -1,14 +1,16 @@
 package com.hcd.jbox2d.game.activity;
 
+import com.hcd.jbox2d.game.obj.ExitApplication;
 import com.hcd.jbox2d.game.view.CustomDialog;
 
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +20,7 @@ import android.widget.Button;
 public class Stage1Activity extends Activity {
 	
 	private Button optionsButton, homeButton, nextButton, retryButton;
+	public static int  screenWidth, screenHeight;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +28,19 @@ public class Stage1Activity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE); // 去title
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);// 全屏
+		
+		DisplayMetrics metric = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metric);
+		screenWidth = metric.widthPixels;
+		screenHeight = metric.heightPixels;
+		
 		setContentView(R.layout.activity_stage1);
 		optionsButton = (Button) findViewById(R.id.optionsstage1);
 		homeButton = (Button)findViewById(R.id.homestage1);
 		nextButton = (Button)findViewById(R.id.nextstage1);
 		retryButton = (Button)findViewById(R.id.retrystage1);
+		
+		ExitApplication.getInstance().addActivity(this);
 	}
 
 	
@@ -65,29 +76,49 @@ public class Stage1Activity extends Activity {
 		//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
 		Stage1Activity.this.finish();
 	}
+	
+	public void homeClick(View view) {
+		Intent intent = new Intent();
+		// 设置Intent的源地址和目标地址
+		intent.setClass(getApplicationContext(), LevelActivity.class);
+		// 调用startActivity方法发送意图给系统
+		startActivity(intent);
+		//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
+		Stage1Activity.this.finish();
+	}
+	
+	public void nextClick(View view) {
+		Intent intent = new Intent();
+		// 设置Intent的源地址和目标地址
+		intent.setClass(getApplicationContext(), Stage2Activity.class);
+		// 调用startActivity方法发送意图给系统
+		startActivity(intent);
+		//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
+		Stage1Activity.this.finish();
+	}
 
-	public void showAlertDialog(View view) {
+	public void showAlertDialog() {
 
 		CustomDialog.Builder builder = new CustomDialog.Builder(this);
 //		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("这个就是自定义的提示框");
-		builder.setTitle("提示");
-		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+		builder.setMessage("Are you sure to quite the Cut-Polygen game?");
+		builder.setTitle("Message");
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
 				//设置你的操作事项
+				ExitApplication.getInstance().exit();
 			}
 		});
 
-		builder.setNegativeButton("取消",
+		builder.setNegativeButton("CANCEL",
 				new android.content.DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
 					}
 				});
-
 		builder.create().show();
-
+		
 	}
 	
 	@Override
@@ -100,5 +131,13 @@ public class Stage1Activity extends Activity {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 		super.onResume();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			showAlertDialog();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

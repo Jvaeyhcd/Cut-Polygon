@@ -8,6 +8,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
+import com.hcd.jbox2d.game.activity.Stage2Activity;
 import com.hcd.jbox2d.game.obj.Line;
 import com.hcd.jbox2d.game.obj.Platform;
 import com.hcd.jbox2d.game.obj.Polygon;
@@ -43,12 +44,12 @@ public class Stage2View extends View {
 	//屏幕的宽度与高度
 	private float screenWidth, screenHeight;
 	private Polygon polygon2;
-	private ArrayList<Polygon> polygons = new ArrayList<Polygon>();
+	private ArrayList<Polygon> polygons;
 	private Line line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
 	private boolean inScreen, outScreen;
-	private static int lineNum = 3;
+	private static int lineNum;
 	private Platform platform;
-	private ArrayList<Platform> platforms = new ArrayList<Platform>();
+	private ArrayList<Platform> platforms;
 	//判断所有物体是否都静止
 	private boolean isSleeping;
 	//游戏所得分数的百分比
@@ -58,6 +59,7 @@ public class Stage2View extends View {
 	private float cutArea;
 	
 	private boolean gameOver;
+	private boolean gameSuccess;
 	
 	private Canvas canvas;
 	private Paint paint;
@@ -113,8 +115,12 @@ public class Stage2View extends View {
 		paint.setTextSize(20);
 		canvas.drawText("Removed:" + removed+"%", 10 , screenHeight - 10, paint);
 		canvas.drawText("Target:" + (int)Math.round(PASSSCORE*100)+"%" , 150, screenHeight - 10, paint);
-		if (removed >= PASSSCORE * 100 && lineNum <= 0) {
-			canvas.drawText("SUCCESS!", screenWidth - 100, 30, paint);
+		if (gameOver) {
+			if (gameSuccess) {
+				canvas.drawText("SUCCESS!", screenWidth - 100, 30, paint);
+			} else {
+				canvas.drawText("FAILED!", screenWidth - 80, 30, paint);
+			}
 		} else {
 			if (lineNum == 3) {
 				canvas.drawLine(screenWidth - 20, 10, screenWidth - 30, 30, paint);
@@ -174,15 +180,19 @@ public class Stage2View extends View {
 	 * 初始化游戏
 	 */
 	private void initGame() {
+		polygons = new ArrayList<Polygon>();
+		platforms = new ArrayList<Platform>();
+		lineNum = 3;
 		gameOver = false;
+		gameSuccess = false;
 		gameView = this;
 		removed = 0;
 		inScreen = false;
 		outScreen = false;
 		isSleeping = true;
 		cutArea = 0.0f;
-		screenWidth = 800;
-		screenHeight = 480;
+		screenWidth = Stage2Activity.screenWidth;
+		screenHeight = Stage2Activity.screenHeight;
 		Vec2 gravity = new Vec2(0.0f, 10.0f); // 向量，用来标示当前世界的重力方向，第一个参数为水平方向，负数为做，正数为右。第二个参数表示垂直方向
 		world = new World(gravity);
 		createPlatform();
@@ -206,8 +216,6 @@ public class Stage2View extends View {
 			}
 		}
 	};
-	
-	
 	
 	private Runnable cutloop = new Runnable() {
 		
@@ -279,11 +287,15 @@ public class Stage2View extends View {
 				Log.i("游戏状态", "游戏结束" + cutArea / initArea);
 				if (PASSSCORE <= cutArea / initArea) {
 					//游戏过关
+					gameSuccess = true;
 					Log.i("游戏结果", "过关");
+				}else {
+					gameSuccess = false;
 				}
 			}
-			if (PASSSCORE == cutArea / initArea) {
+			if (0.99 <= cutArea / initArea) {
 				gameOver = true;
+				gameSuccess = true;
 			}
 			mHandler.postDelayed(cutloop, (long) timeStep * 1000);
 		}
@@ -297,7 +309,7 @@ public class Stage2View extends View {
 		platforms.add(platform);
 		platform = new Platform(world, screenWidth / 16 / RATE, screenHeight * 1 / 2 / RATE, screenWidth / 8 / RATE, screenHeight * 15 / 16 / RATE);
 		platforms.add(platform);
-		platform = new Platform(world, screenWidth * 5 / 6 / RATE, screenHeight * 5 / 13 / RATE, screenWidth * 11 / 12 / RATE, screenHeight * 13 / 16 / RATE);
+		platform = new Platform(world, screenWidth * 5 / 6 / RATE, screenHeight * 5 / 13 / RATE, screenWidth * 43 / 48 / RATE, screenHeight * 13 / 16 / RATE);
 		platforms.add(platform);
 	}
 

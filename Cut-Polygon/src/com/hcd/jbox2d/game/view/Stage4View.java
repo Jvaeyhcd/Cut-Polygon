@@ -8,6 +8,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
+import com.hcd.jbox2d.game.activity.Stage4Activity;
 import com.hcd.jbox2d.game.obj.Line;
 import com.hcd.jbox2d.game.obj.Platform;
 import com.hcd.jbox2d.game.obj.Polygon;
@@ -56,6 +57,9 @@ public class Stage4View extends View{
 	//初始物体的质量
 	private float initArea;
 	private float cutArea;
+	
+	private boolean gameOver;
+	private boolean gameSuccess;
 	
 	private Canvas canvas;
 	private Paint paint;
@@ -111,8 +115,12 @@ public class Stage4View extends View{
 		paint.setTextSize(20);
 		canvas.drawText("Removed:" + removed+"%", 10 , screenHeight - 10, paint);
 		canvas.drawText("Target:" + (int)Math.round(PASSSCORE*100)+"%" , 150, screenHeight - 10, paint);
-		if (removed >= PASSSCORE * 100 && lineNum <= 0) {
-			canvas.drawText("SUCCESS!", screenWidth - 100, 30, paint);
+		if (gameOver) {
+			if (gameSuccess) {
+				canvas.drawText("SUCCESS!", screenWidth - 100, 30, paint);
+			} else {
+				canvas.drawText("FAILED!", screenWidth - 80, 30, paint);
+			}
 		} else {
 			if (lineNum == 3) {
 				canvas.drawLine(screenWidth - 20, 10, screenWidth - 30, 30, paint);
@@ -172,14 +180,17 @@ public class Stage4View extends View{
 	 * 初始化游戏
 	 */
 	private void initGame() {
+		gameOver = false;
+		gameSuccess = false;
 		gameView = this;
 		removed = 0;
 		inScreen = false;
 		outScreen = false;
 		isSleeping = true;
 		cutArea = 0.0f;
-		screenWidth = 800;
-		screenHeight = 480;
+		lineNum = 3;
+		screenWidth = Stage4Activity.screenWidth;
+		screenHeight = Stage4Activity.screenHeight;
 		Vec2 gravity = new Vec2(0.0f, 10.0f); // 向量，用来标示当前世界的重力方向，第一个参数为水平方向，负数为做，正数为右。第二个参数表示垂直方向
 		world = new World(gravity);
 		createPlatform();
@@ -196,19 +207,19 @@ public class Stage4View extends View{
 
 		@Override
 		public void run() {
-			world.step(timeStep, iterations, iterations);
-			gameView.invalidate();
-			mHandler.postDelayed(update, (long) timeStep * 1000);
+			if (!gameOver){
+				world.step(timeStep, iterations, iterations);
+				gameView.invalidate();
+				mHandler.postDelayed(update, (long) timeStep * 1000);
+			}
 		}
 	};
-	
-	
 	
 	private Runnable cutloop = new Runnable() {
 		
 		@Override
 		public void run() {
-			if(inScreen && outScreen) {
+			if(inScreen && outScreen && !gameOver) {
 				boolean isCut = false;
 				ArrayList<Polygon> polytemp = new ArrayList<Polygon>();
 				for (int i = 0; i < polygons.size(); i++) {
@@ -270,11 +281,19 @@ public class Stage4View extends View{
 				polygons = temp_poly;
 			}
 			if (isSleeping && lineNum <= 0) {
+				gameOver = true;
 				Log.i("游戏状态", "游戏结束" + cutArea / initArea);
 				if (PASSSCORE <= cutArea / initArea) {
 					//游戏过关
+					gameSuccess = true;
 					Log.i("游戏结果", "过关");
+				}else {
+					gameSuccess = false;
 				}
+			}
+			if (0.99 <= cutArea / initArea) {
+				gameOver = true;
+				gameSuccess = true;
 			}
 			mHandler.postDelayed(cutloop, (long) timeStep * 1000);
 		}
