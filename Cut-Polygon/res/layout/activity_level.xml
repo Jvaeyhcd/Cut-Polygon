@@ -48,4 +48,14 @@
         android:layout_toRightOf="@+id/Lev3Button"
         android:text="@string/Lev4" />
 
+    <Button
+        android:id="@+id/Lev5Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Lev4Button"
+        android:layout_alignBottom="@+id/Lev4Button"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/Lev4Button"
+        android:text="@string/Lev5" />
+
 </RelativeLayout>

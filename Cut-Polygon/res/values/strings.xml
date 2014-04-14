@@ -30,4 +30,8 @@
     <string name="home">Home</string>
     <string name="retry">Retry</string>
     <string name="next">Next</string>
+    <string name="title_activity_stage5">Stage5Activity</string>
+    <string name="Stage5">Stage 5</string>
+    <string name="Lev5">Lev5</string>
+
 </resources>

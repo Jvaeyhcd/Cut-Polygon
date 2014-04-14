@@ -13,7 +13,7 @@ import android.widget.Button;
 
 public class LevelActivity extends Activity {
 
-	private Button lev1Button, lev2Button, lev3Button, lev4Button;
+	private Button lev1Button, lev2Button, lev3Button, lev4Button, lev5Button;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,7 @@ public class LevelActivity extends Activity {
 		lev2Button = (Button) findViewById(R.id.Lev2Button);
 		lev3Button = (Button) findViewById(R.id.Lev3Button);
 		lev4Button = (Button) findViewById(R.id.Lev4Button);
+		lev5Button = (Button) findViewById(R.id.Lev5Button);
 		
 		lev1Button.setOnClickListener(new View.OnClickListener() {
 			
@@ -74,6 +75,19 @@ public class LevelActivity extends Activity {
 				Intent intent = new Intent();
 				// 设置Intent的源地址和目标地址
 				intent.setClass(getApplicationContext(), Stage4Activity.class);
+				// 调用startActivity方法发送意图给系统
+				startActivity(intent);
+				//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
+				LevelActivity.this.finish();
+			}
+		});
+		lev5Button.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				// 设置Intent的源地址和目标地址
+				intent.setClass(getApplicationContext(), Stage5Activity.class);
 				// 调用startActivity方法发送意图给系统
 				startActivity(intent);
 				//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的

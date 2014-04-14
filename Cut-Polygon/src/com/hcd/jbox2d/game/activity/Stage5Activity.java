@@ -17,7 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class Stage4Activity extends Activity {
+public class Stage5Activity extends Activity {
 
 	private Button optionsButton, homeButton, nextButton, retryButton;
 	public static int  screenWidth, screenHeight;
@@ -34,11 +34,11 @@ public class Stage4Activity extends Activity {
 		screenWidth = metric.widthPixels;
 		screenHeight = metric.heightPixels;
 		
-		setContentView(R.layout.activity_stage4);
-		optionsButton = (Button) findViewById(R.id.optionsstage4);
-		homeButton = (Button)findViewById(R.id.homestage4);
-		nextButton = (Button)findViewById(R.id.nextstage4);
-		retryButton = (Button)findViewById(R.id.retrystage4);
+		setContentView(R.layout.activity_stage5);
+		optionsButton = (Button) findViewById(R.id.optionsstage5);
+		homeButton = (Button)findViewById(R.id.homestage5);
+		nextButton = (Button)findViewById(R.id.nextstage5);
+		retryButton = (Button)findViewById(R.id.retrystage5);
 		
 		ExitApplication.getInstance().addActivity(this);
 	}
@@ -61,11 +61,11 @@ public class Stage4Activity extends Activity {
 	public void  retryClick(View view){
 		Intent intent = new Intent();
 		// 设置Intent的源地址和目标地址
-		intent.setClass(getApplicationContext(), Stage4Activity.class);
+		intent.setClass(getApplicationContext(), Stage5Activity.class);
 		// 调用startActivity方法发送意图给系统
 		startActivity(intent);
 		//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
-		Stage4Activity.this.finish();
+		Stage5Activity.this.finish();
 	}
 	
 	public void homeClick(View view) {
@@ -75,7 +75,7 @@ public class Stage4Activity extends Activity {
 		// 调用startActivity方法发送意图给系统
 		startActivity(intent);
 		//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
-		Stage4Activity.this.finish();
+		Stage5Activity.this.finish();
 	}
 	
 	public void nextClick(View view) {
@@ -85,7 +85,7 @@ public class Stage4Activity extends Activity {
 		// 调用startActivity方法发送意图给系统
 		startActivity(intent);
 		//关闭当前activity，添加了该语句后，用户通过点击返回键是无法返回该activity的
-		Stage4Activity.this.finish();
+		Stage5Activity.this.finish();
 	}
 	
 	public void showAlertDialog() {
@@ -138,4 +138,5 @@ public class Stage4Activity extends Activity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
 }

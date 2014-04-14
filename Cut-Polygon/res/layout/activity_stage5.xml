@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Stage4Activity" >
+
+    <com.hcd.jbox2d.game.view.Stage5View
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Stage5"
+        android:textColor="#FF00FF" />
+    <Button
+        android:id="@+id/optionsstage5"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="optionsClick"
+        android:text="@string/options" />
+
+    <Button
+        android:id="@+id/homestage5"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_above="@+id/optionsstage5"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="homeClick"
+        android:text="@string/home"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/nextstage5"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_above="@+id/homestage5"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="nextClick"
+        android:text="@string/next"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/retrystage5"
+        android:layout_width="100.0dip"
+        android:layout_height="30.0dip"
+        android:layout_above="@+id/nextstage5"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_ok_selector"
+        android:onClick="retryClick"
+        android:text="@string/retry"
+        android:visibility="invisible" />
+
+</RelativeLayout>

@@ -8,7 +8,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
-import com.hcd.jbox2d.game.activity.Stage4Activity;
+import com.hcd.jbox2d.game.activity.Stage5Activity;
 import com.hcd.jbox2d.game.obj.Line;
 import com.hcd.jbox2d.game.obj.Platform;
 import com.hcd.jbox2d.game.obj.Polygon;
@@ -28,9 +28,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class Stage4View extends View{
+public class Stage5View extends View{
 
-	private Stage4View gameView;
+	private Stage5View gameView;
 	//过关百分比
 	private static float PASSSCORE = 1.0f;
 	//物理屏幕与物理世界的比例px/m
@@ -64,7 +64,7 @@ public class Stage4View extends View{
 	private Canvas canvas;
 	private Paint paint;
 	
-	public Stage4View(Context context, AttributeSet attrs) {
+	public Stage5View(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		paint = new Paint();
 		paint.setAntiAlias(true);
@@ -189,8 +189,8 @@ public class Stage4View extends View{
 		isSleeping = true;
 		cutArea = 0.0f;
 		lineNum = 3;
-		screenWidth = Stage4Activity.screenWidth;
-		screenHeight = Stage4Activity.screenHeight;
+		screenWidth = Stage5Activity.screenWidth;
+		screenHeight = Stage5Activity.screenHeight;
 		Vec2 gravity = new Vec2(0.0f, 10.0f); // 向量，用来标示当前世界的重力方向，第一个参数为水平方向，负数为做，正数为右。第二个参数表示垂直方向
 		world = new World(gravity);
 		createPlatform();
@@ -300,17 +300,26 @@ public class Stage4View extends View{
 	};
 	
 	private void createPlatform() {
-		platform = new Platform(world, screenWidth * 3 / 16 / RATE, screenHeight * 9 / 10 / RATE, screenWidth / 4 / RATE, screenHeight * 19 / 20 / RATE);
+//		platform = new Platform(world, screenWidth * 3 / 16 / RATE, screenHeight * 9 / 10 / RATE, screenWidth / 4 / RATE, screenHeight * 19 / 20 / RATE);
+//		platforms.add(platform);
+//		platform = new Platform(world, screenWidth * 3 / 8 / RATE, screenHeight * 9 / 10 / RATE, screenWidth * 7 / 16 / RATE, screenHeight * 19 / 20 / RATE);
+//		platforms.add(platform);
+//		platform = new Platform(world, (screenWidth * 3 / 32) / RATE, screenHeight * 1 / 6  / RATE, screenWidth / 8 / RATE, screenHeight / 4 / RATE);
+//		platforms.add(platform);
+//		platform = new Platform(world, (screenWidth / 2 + 2) / RATE, screenHeight * 1 / 6  / RATE, screenWidth * 17 / 32 / RATE, screenHeight / 4 / RATE);
+//		platforms.add(platform);
+//		platform = new Platform(world, (screenWidth * 3 / 32) / RATE, screenHeight * 1 / 2  / RATE, screenWidth / 8 / RATE, screenHeight * 7 / 12 / RATE);
+//		platforms.add(platform);
+//		platform = new Platform(world, (screenWidth / 2 + 2) / RATE, screenHeight * 1 / 2  / RATE, screenWidth * 17 / 32 / RATE, screenHeight * 7 / 12 / RATE);
+//		platforms.add(platform);
+//		
+		platform = new Platform(world, screenWidth * 3 / 4 / RATE, screenHeight / 3 / RATE, screenWidth * 9 / 16 / RATE, screenHeight *12 / 30 / RATE);
 		platforms.add(platform);
-		platform = new Platform(world, screenWidth * 3 / 8 / RATE, screenHeight * 9 / 10 / RATE, screenWidth * 7 / 16 / RATE, screenHeight * 19 / 20 / RATE);
+		platform = new Platform(world, 0, screenHeight * 25/ 30 / RATE, screenWidth / 3 / RATE, screenHeight *27 / 30 / RATE);
 		platforms.add(platform);
-		platform = new Platform(world, (screenWidth * 3 / 32) / RATE, screenHeight * 1 / 6  / RATE, screenWidth / 8 / RATE, screenHeight / 4 / RATE);
+		platform = new Platform(world, screenWidth / 100 / RATE, screenHeight / 2 / RATE, screenWidth / 12 / RATE, screenHeight *27 / 30 / RATE);
 		platforms.add(platform);
-		platform = new Platform(world, (screenWidth / 2 + 2) / RATE, screenHeight * 1 / 6  / RATE, screenWidth * 17 / 32 / RATE, screenHeight / 4 / RATE);
-		platforms.add(platform);
-		platform = new Platform(world, (screenWidth * 3 / 32) / RATE, screenHeight * 1 / 2  / RATE, screenWidth / 8 / RATE, screenHeight * 7 / 12 / RATE);
-		platforms.add(platform);
-		platform = new Platform(world, (screenWidth / 2 + 2) / RATE, screenHeight * 1 / 2  / RATE, screenWidth * 17 / 32 / RATE, screenHeight * 7 / 12 / RATE);
+		platform = new Platform(world, screenWidth * 3 / 4 / RATE, screenHeight / 6 / RATE, screenWidth * 4 / 5 / RATE, screenHeight *27 / 30 / RATE);
 		platforms.add(platform);
 	}
 
@@ -342,16 +351,36 @@ public class Stage4View extends View{
 	}
 
 	private void createPolygon() {
+		initArea = 0;
 		Vec2[] vecs = new Vec2[4];
-		vecs[0] = new Vec2(screenWidth * 3 / 16 / RATE, (screenHeight) * 2 / 5 / RATE);
-		vecs[1] = new Vec2(-screenWidth * 3 / 16 / RATE, (screenHeight) * 2 / 5 / RATE);
-		vecs[2] = new Vec2(-screenWidth * 3 / 16 / RATE, -(screenHeight) * 2 / 5 / RATE);
-		vecs[3] = new Vec2(screenWidth * 3 / 16 / RATE, -(screenHeight) * 2 / 5 / RATE);
+		vecs[0] = new Vec2(screenWidth * 1 / 5 / RATE, (screenHeight) / 30 / RATE);
+		vecs[1] = new Vec2(-screenWidth * 1 / 5 / RATE, (screenHeight) / 30 / RATE);
+		vecs[2] = new Vec2(-screenWidth * 1 / 5 / RATE, -(screenHeight) / 30 / RATE);
+		vecs[3] = new Vec2(screenWidth * 1 / 5 / RATE, -(screenHeight)  / 30 / RATE);
 		Vec2[] vecst = GrahamScanUtils.getGrahamScan(vecs);
-		polygon2 = new Polygon(world, screenWidth * 5 / 16 / RATE, (screenHeight) / 2 / RATE, vecst, vecst.length, 0.0f,
+		polygon2 = new Polygon(world, screenWidth * 17 / 60 / RATE, (screenHeight) * 24 / 30 / RATE, vecst, vecst.length, 0.0f,
 				0.5f, 1.0f, 0.0f);
-		initArea = polygon2.getMass();
+		initArea += polygon2.getMass();
+		polygons.add(polygon2);
 		
+		vecs[0] = new Vec2(screenWidth * 1 / 15 / RATE, (screenHeight) / 10 / RATE);
+		vecs[1] = new Vec2(-screenWidth * 1 / 15 / RATE, (screenHeight) / 10 / RATE);
+		vecs[2] = new Vec2(-screenWidth * 1 / 15 / RATE, -(screenHeight) / 10 / RATE);
+		vecs[3] = new Vec2(screenWidth * 1 / 15 / RATE, -(screenHeight)  / 10 / RATE);
+		vecst = GrahamScanUtils.getGrahamScan(vecs);
+		polygon2 = new Polygon(world, screenWidth * 3 / 20 / RATE, (screenHeight) * 2 / 3 / RATE, vecst, vecst.length, 0.0f,
+				0.5f, 1.0f, 0.0f);
+		initArea += polygon2.getMass();
+		polygons.add(polygon2);
+		
+		vecs[0] = new Vec2(screenWidth * 3 / 32 / RATE, (screenHeight) * 19 / 120 / RATE);
+		vecs[1] = new Vec2(-screenWidth * 3 / 32 / RATE, (screenHeight) * 19 / 120 / RATE);
+		vecs[2] = new Vec2(-screenWidth * 3 / 32 / RATE, -(screenHeight) * 19 / 120 / RATE);
+		vecs[3] = new Vec2(screenWidth * 3 / 32 / RATE, -(screenHeight)  * 19 / 120 / RATE);
+		vecst = GrahamScanUtils.getGrahamScan(vecs);
+		polygon2 = new Polygon(world, screenWidth * 21 / 32 / RATE, (screenHeight) * 7 / 40 / RATE, vecst, vecst.length, 0.0f,
+				0.5f, 1.0f, 0.0f);
+		initArea += polygon2.getMass();
 		polygons.add(polygon2);
 	}
 	
