@@ -16,6 +16,7 @@
         android:layout_alignBottom="@+id/Lev2Button"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="30dp"
+        android:background="@drawable/btn_ok_selector"
         android:text="@string/Lev1" />
 
     <Button
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="14dp"
+        android:background="@drawable/btn_ok_selector"
         android:layout_marginTop="16dp"
         android:layout_toRightOf="@+id/Lev1Button"
         android:text="@string/Lev2" />
@@ -31,6 +33,7 @@
     <Button
         android:id="@+id/Lev3Button"
         android:layout_width="wrap_content"
+        android:background="@drawable/btn_ok_selector"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/Lev2Button"
         android:layout_alignBottom="@+id/Lev2Button"
@@ -41,6 +44,7 @@
     <Button
         android:id="@+id/Lev4Button"
         android:layout_width="wrap_content"
+        android:background="@drawable/btn_ok_selector"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/Lev3Button"
         android:layout_alignBottom="@+id/Lev3Button"
@@ -51,6 +55,7 @@
     <Button
         android:id="@+id/Lev5Button"
         android:layout_width="wrap_content"
+        android:background="@drawable/btn_ok_selector"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/Lev4Button"
         android:layout_alignBottom="@+id/Lev4Button"
