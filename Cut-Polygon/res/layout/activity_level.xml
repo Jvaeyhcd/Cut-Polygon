@@ -17,6 +17,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="30dp"
         android:background="@drawable/btn_ok_selector"
+        android:enabled="false"
         android:text="@string/Lev1" />
 
     <Button
@@ -28,6 +29,7 @@
         android:background="@drawable/btn_ok_selector"
         android:layout_marginTop="16dp"
         android:layout_toRightOf="@+id/Lev1Button"
+        android:enabled="false"
         android:text="@string/Lev2" />
 
     <Button
@@ -39,6 +41,7 @@
         android:layout_alignBottom="@+id/Lev2Button"
         android:layout_marginLeft="14dp"
         android:layout_toRightOf="@+id/Lev2Button"
+        android:enabled="false"
         android:text="@string/Lev3" />
 
     <Button
@@ -50,6 +53,7 @@
         android:layout_alignBottom="@+id/Lev3Button"
         android:layout_marginLeft="16dp"
         android:layout_toRightOf="@+id/Lev3Button"
+        android:enabled="false"
         android:text="@string/Lev4" />
 
     <Button
@@ -61,6 +65,7 @@
         android:layout_alignBottom="@+id/Lev4Button"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/Lev4Button"
+        android:enabled="false"
         android:text="@string/Lev5" />
 
 </RelativeLayout>

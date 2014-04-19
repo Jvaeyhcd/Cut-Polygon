@@ -8,6 +8,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
+import com.hcd.jbox2d.game.activity.LevelActivity;
 import com.hcd.jbox2d.game.activity.Stage4Activity;
 import com.hcd.jbox2d.game.obj.Line;
 import com.hcd.jbox2d.game.obj.Platform;
@@ -60,6 +61,7 @@ public class Stage4View extends View{
 	
 	private boolean gameOver;
 	private boolean gameSuccess;
+	private boolean haveWriteDb;
 	
 	private Canvas canvas;
 	private Paint paint;
@@ -118,8 +120,30 @@ public class Stage4View extends View{
 		if (gameOver) {
 			if (gameSuccess) {
 				canvas.drawText("SUCCESS!", screenWidth - 100, 30, paint);
+				//游戏过关后初始化下一关数据
+				if (!haveWriteDb) {
+					if (LevelActivity.lvManager.getStageByLevel(5).size() == 0){
+						LevelActivity.lvManager.insertLevelInfo(5, 0, 0);
+					}else if (LevelActivity.lvManager.getStageByLevel(5).size() == 1) {
+						LevelActivity.lvManager.updateLevelInfo(5, 0, 0);
+					} else {
+						Log.i("Erro Message", "查出数据不是唯一的");
+					}
+				}
 			} else {
 				canvas.drawText("FAILED!", screenWidth - 80, 30, paint);
+			}
+			if (!haveWriteDb) {
+				//游戏结束后保存数据
+				if (LevelActivity.lvManager.getStageByLevel(4).size() == 0){
+					LevelActivity.lvManager.insertLevelInfo(4, removed, 1);
+				}else if (LevelActivity.lvManager.getStageByLevel(4).size() == 1) {
+					int oldScore = LevelActivity.lvManager.getStageByLevel(4).get(0).getScore();
+					LevelActivity.lvManager.updateLevelInfo(4, oldScore > removed ? oldScore : removed, 1);
+				} else {
+					Log.i("Erro Message", "查出数据不是唯一的");
+				}
+				haveWriteDb = true;
 			}
 		} else {
 			if (lineNum == 3) {
@@ -182,6 +206,7 @@ public class Stage4View extends View{
 	private void initGame() {
 		gameOver = false;
 		gameSuccess = false;
+		haveWriteDb = false;
 		gameView = this;
 		removed = 0;
 		inScreen = false;

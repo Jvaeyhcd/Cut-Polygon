@@ -8,6 +8,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.World;
 
+import com.hcd.jbox2d.game.activity.LevelActivity;
 import com.hcd.jbox2d.game.activity.Stage1Activity;
 import com.hcd.jbox2d.game.obj.Line;
 import com.hcd.jbox2d.game.obj.Platform;
@@ -44,7 +45,7 @@ public class Stage1View extends View {
 	//屏幕的宽度与高度
 	private float screenWidth, screenHeight;
 	private Polygon polygon2;
-	private ArrayList<Polygon> polygons = new ArrayList<Polygon>();
+	private ArrayList<Polygon> polygons;
 	private Line line;
 	private boolean inScreen, outScreen;
 	private int lineNum;
@@ -57,6 +58,8 @@ public class Stage1View extends View {
 	private float initArea;
 	private float cutArea;
 	private boolean gameOver;
+	private boolean gameSuccess;
+	private boolean haveWriteDb;
 	private Canvas canvas;
 	private Paint paint;
 	
@@ -111,8 +114,34 @@ public class Stage1View extends View {
 		paint.setTextSize(20);
 		canvas.drawText("Removed:" + removed+"%", 10 , screenHeight - 10, paint);
 		canvas.drawText("Target:" + (int)Math.round(PASSSCORE*100)+"%" , 150, screenHeight - 10, paint);
-		if (removed >= PASSSCORE * 100) {
-			canvas.drawText("SUCCESS!", screenWidth - 100, 30, paint);
+		if (gameOver) {
+			if (gameSuccess) {
+				canvas.drawText("SUCCESS!", screenWidth - 100, 30, paint);
+				//游戏过关后初始化下一关数据
+				if (!haveWriteDb) {
+					if (LevelActivity.lvManager.getStageByLevel(2).size() == 0){
+						LevelActivity.lvManager.insertLevelInfo(2, 0, 0);
+					}else if (LevelActivity.lvManager.getStageByLevel(2).size() == 1) {
+						LevelActivity.lvManager.updateLevelInfo(2, 0, 0);
+					} else {
+						Log.i("Erro Message", "查出数据不是唯一的");
+					}
+				}
+			} else {
+				canvas.drawText("FAILED!", screenWidth - 80, 30, paint);
+			}
+			if (!haveWriteDb) {
+				//游戏结束后保存数据
+				if (LevelActivity.lvManager.getStageByLevel(1).size() == 0){
+					LevelActivity.lvManager.insertLevelInfo(1, removed, 1);
+				}else if (LevelActivity.lvManager.getStageByLevel(1).size() == 1) {
+					int oldScore = LevelActivity.lvManager.getStageByLevel(1).get(0).getScore();
+					LevelActivity.lvManager.updateLevelInfo(1, oldScore > removed ? oldScore : removed, 1);
+				} else {
+					Log.i("Erro Message", "查出数据不是唯一的");
+				}
+				haveWriteDb = true;
+			}
 		} else {
 			if (lineNum == 3) {
 				canvas.drawLine(screenWidth - 20, 10, screenWidth - 30, 30, paint);
@@ -170,6 +199,9 @@ public class Stage1View extends View {
 		line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
 		lineNum = 3;
 		gameOver = false;
+		gameSuccess = false;
+		haveWriteDb = false;
+		polygons = new ArrayList<Polygon>();
 		removed = 0;
 		inScreen = false;
 		outScreen = false;
@@ -182,7 +214,7 @@ public class Stage1View extends View {
 		
 		Vec2 gravity = new Vec2(0.0f, 10.0f); // 向量，用来标示当前世界的重力方向，第一个参数为水平方向，负数为做，正数为右。第二个参数表示垂直方向
 		world = new World(gravity);
-		createPlatform(0, screenHeight / 2, screenWidth / 2, 10);
+		createPlatform();
 		createBorder(false, false, false, false);
 		createPolygon();
 		timeStep = 1.0f / 30.0f; // 定义频率
@@ -280,18 +312,22 @@ public class Stage1View extends View {
 				Log.i("游戏状态", "游戏结束" + cutArea / initArea);
 				if (PASSSCORE <= cutArea / initArea) {
 					//游戏过关
+					gameSuccess = true;
 					Log.i("游戏结果", "过关");
+				}else {
+					gameSuccess = false;
 				}
 			}
-			if (PASSSCORE == cutArea / initArea) {
+			if (0.99 <= cutArea / initArea) {
 				gameOver = true;
+				gameSuccess = true;
 			}
 			mHandler.postDelayed(cutloop, (long) timeStep * 1000);
 		}
 	};
 
 
-	private void createPlatform(float x, float y, float width, float height) {
+	private void createPlatform() {
 		platform = new Platform(world, screenWidth * 3 / 8 / RATE, screenHeight * 5 / 6 / RATE, screenWidth * 5 / 8 / RATE, screenHeight * 7 / 8 / RATE);
 	}
 

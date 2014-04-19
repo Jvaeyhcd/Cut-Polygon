@@ -9,10 +9,6 @@
     <string name="play">Play</string>
     <string name="level">Level</string>
     <string name="title_activity_level">LevelActivity</string>
-    <string name="Lev1">Lev1</string>
-    <string name="Lev2">Lev2</string>
-    <string name="Lev3">Lev3</string>
-    <string name="Lev4">Lev4</string>
     <string name="title_activity_first">FirstActivity</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_first_stage">FirstStageActivity</string>
@@ -32,6 +28,10 @@
     <string name="next">Next</string>
     <string name="title_activity_stage5">Stage5Activity</string>
     <string name="Stage5">Stage 5</string>
-    <string name="Lev5">Lev5</string>
+    <string name="Lev1">Lev1\n</string>
+    <string name="Lev2">Lev2\n</string>
+    <string name="Lev3">Lev3\n</string>
+    <string name="Lev4">Lev4\n</string>
+    <string name="Lev5">Lev5\n</string>
 
 </resources>

@@ -1,6 +1,10 @@
 package com.hcd.jbox2d.game.activity;
 
+import java.util.ArrayList;
+
+import com.hcd.jbox2d.game.db.LevelDataManager;
 import com.hcd.jbox2d.game.obj.ExitApplication;
+import com.hcd.jbox2d.game.obj.Stage;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,11 +18,14 @@ import android.widget.Button;
 public class LevelActivity extends Activity {
 
 	private Button lev1Button, lev2Button, lev3Button, lev4Button, lev5Button;
+	public static LevelDataManager lvManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_level);
+		
+		lvManager = new LevelDataManager(this);
 		
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);// х╚фа
@@ -28,6 +35,33 @@ public class LevelActivity extends Activity {
 		lev3Button = (Button) findViewById(R.id.Lev3Button);
 		lev4Button = (Button) findViewById(R.id.Lev4Button);
 		lev5Button = (Button) findViewById(R.id.Lev5Button);
+		
+		ArrayList<Stage> stages = lvManager.getAllStages();
+		if (stages.size() >= 1) {
+			lev1Button.setText(lev1Button.getText()+""+stages.get(0).getScore());
+			lev1Button.setEnabled(true);
+		}
+		if (stages.size() >= 2) {
+			lev2Button.setText(lev2Button.getText()+""+stages.get(1).getScore());
+			lev2Button.setEnabled(true);
+		}
+		if (stages.size() >= 3) {
+			lev3Button.setText(lev3Button.getText()+""+stages.get(2).getScore());
+			lev3Button.setEnabled(true);
+		}
+		if (stages.size() >= 4) {
+			lev4Button.setText(lev4Button.getText()+""+stages.get(3).getScore());
+			lev4Button.setEnabled(true);
+		}
+		if (stages.size() >= 5) {
+			lev5Button.setText(lev5Button.getText()+""+stages.get(4).getScore());
+			lev5Button.setEnabled(true);
+		}
+//		lev1Button.setText(lev1Button.getText()+""+stages.get(0).getScore());
+//		lev2Button.setText(lev2Button.getText()+""+stages.get(1).getScore());
+//		lev3Button.setText(lev3Button.getText()+""+stages.get(2).getScore());
+//		lev4Button.setText(lev4Button.getText()+""+stages.get(3).getScore());
+//		lev5Button.setText(lev5Button.getText()+""+stages.get(4).getScore());
 		
 		lev1Button.setOnClickListener(new View.OnClickListener() {
 			

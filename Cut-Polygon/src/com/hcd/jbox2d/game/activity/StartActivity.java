@@ -1,5 +1,6 @@
 package com.hcd.jbox2d.game.activity;
 
+import com.hcd.jbox2d.game.db.LevelDataManager;
 import com.hcd.jbox2d.game.obj.ExitApplication;
 
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.widget.Button;
 
 public class StartActivity extends Activity {
 	
