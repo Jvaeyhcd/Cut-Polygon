@@ -2,8 +2,10 @@ package com.hcd.jbox2d.game.activity;
 
 import com.hcd.jbox2d.game.obj.ExitApplication;
 import com.hcd.jbox2d.game.view.CustomDialog;
+import com.hcd.jbox2d.game.view.Stage4View;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +23,9 @@ public class Stage4Activity extends Activity {
 
 	private Button optionsButton, homeButton, nextButton, retryButton;
 	public static int  screenWidth, screenHeight;
+	private Stage4View stage4View;
+	public Handler mHandler;
+	public boolean didShow;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +45,36 @@ public class Stage4Activity extends Activity {
 		nextButton = (Button)findViewById(R.id.nextstage4);
 		retryButton = (Button)findViewById(R.id.retrystage4);
 		
+		didShow = false;
+		stage4View = (Stage4View) findViewById(R.id.stage4View);
+		mHandler = new Handler();
+		mHandler.post(update);
+		
 		ExitApplication.getInstance().addActivity(this);
 	}
+	
+	private Runnable update = new Runnable() {
+
+		@Override
+		public void run() {
+			synchronized (this) {
+				if (!didShow){
+					if (stage4View.gameSuccess){
+						optionsButton.setText("Hidden");
+						retryButton.setVisibility(0);
+						nextButton.setVisibility(0);
+						homeButton.setVisibility(0);
+						if (stage4View.gameSuccess) {
+							nextButton.setEnabled(true);
+						} else
+							nextButton.setEnabled(false);
+						didShow = true;
+					}
+					mHandler.postDelayed(update, 1000);
+				}
+			}
+		}
+	};
 
 	public void optionsClick(View view){
 		Log.i("hcd", "µã»÷ÁË"+optionsButton.getText()+optionsButton.getVisibility());
@@ -50,6 +83,10 @@ public class Stage4Activity extends Activity {
 			retryButton.setVisibility(0);
 			nextButton.setVisibility(0);
 			homeButton.setVisibility(0);
+			if (stage4View.gameSuccess) {
+				nextButton.setEnabled(true);
+			} else
+				nextButton.setEnabled(false);
 		} else {
 			optionsButton.setText("Options");
 			retryButton.setVisibility(-1);

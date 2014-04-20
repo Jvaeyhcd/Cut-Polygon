@@ -5,6 +5,7 @@
     tools:context=".Stage4Activity" >
 
     <com.hcd.jbox2d.game.view.Stage5View
+        android:id="@+id/stage5View"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
     

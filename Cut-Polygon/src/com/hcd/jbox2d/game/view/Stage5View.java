@@ -59,9 +59,9 @@ public class Stage5View extends View{
 	private float initArea;
 	private float cutArea;
 	
-	private boolean gameOver;
-	private boolean gameSuccess;
-	private boolean haveWriteDb;
+	public boolean gameOver;
+	public boolean gameSuccess;
+	public boolean haveWriteDb;
 	
 	private Canvas canvas;
 	private Paint paint;

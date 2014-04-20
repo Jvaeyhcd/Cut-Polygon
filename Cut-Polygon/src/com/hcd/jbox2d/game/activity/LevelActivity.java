@@ -38,23 +38,23 @@ public class LevelActivity extends Activity {
 		
 		ArrayList<Stage> stages = lvManager.getAllStages();
 		if (stages.size() >= 1) {
-			lev1Button.setText(lev1Button.getText()+""+stages.get(0).getScore());
+			lev1Button.setText(lev1Button.getText()+""+lvManager.getStageByLevel(1).get(0).getScore());
 			lev1Button.setEnabled(true);
 		}
 		if (stages.size() >= 2) {
-			lev2Button.setText(lev2Button.getText()+""+stages.get(1).getScore());
+			lev2Button.setText(lev2Button.getText()+""+lvManager.getStageByLevel(2).get(0).getScore());
 			lev2Button.setEnabled(true);
 		}
 		if (stages.size() >= 3) {
-			lev3Button.setText(lev3Button.getText()+""+stages.get(2).getScore());
+			lev3Button.setText(lev3Button.getText()+""+lvManager.getStageByLevel(3).get(0).getScore());
 			lev3Button.setEnabled(true);
 		}
 		if (stages.size() >= 4) {
-			lev4Button.setText(lev4Button.getText()+""+stages.get(3).getScore());
+			lev4Button.setText(lev4Button.getText()+""+lvManager.getStageByLevel(4).get(0).getScore());
 			lev4Button.setEnabled(true);
 		}
 		if (stages.size() >= 5) {
-			lev5Button.setText(lev5Button.getText()+""+stages.get(4).getScore());
+			lev5Button.setText(lev5Button.getText()+""+lvManager.getStageByLevel(5).get(0).getScore());
 			lev5Button.setEnabled(true);
 		}
 //		lev1Button.setText(lev1Button.getText()+""+stages.get(0).getScore());

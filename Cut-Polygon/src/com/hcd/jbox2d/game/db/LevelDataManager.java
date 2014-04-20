@@ -3,13 +3,18 @@ package com.hcd.jbox2d.game.db;
 import java.util.ArrayList;
 
 import com.hcd.jbox2d.game.obj.Stage;
-import com.hcd.jbox2d.game.utils.UtilsConstant;
 
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+/**
+ * SQLite3持久化数据操作类
+ * @author jvaeyhcd.com
+ *保存关卡信息
+ */
 public class LevelDataManager {
 
 	public SQLiteDatabase db;
@@ -37,9 +42,12 @@ public class LevelDataManager {
 	 */
 	public void updateLevelInfo(int level, int score, int success){
 		db.execSQL("UPDATE stage SET score=?,success=? WHERE level=? ", new Object[]{score,success,level});
-		ArrayList<Stage> stages = getAllStages();
 	}
 	
+	/**
+	 * 获得所有的关卡信息
+	 * @return 所有关卡信息
+	 */
 	public ArrayList<Stage> getAllStages() {
 		ArrayList<Stage> stages = new ArrayList<Stage>();
 		

@@ -5,6 +5,7 @@
     tools:context=".Stage3Activity" >
 
     <com.hcd.jbox2d.game.view.Stage3View
+        android:id="@+id/stage3View"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
     

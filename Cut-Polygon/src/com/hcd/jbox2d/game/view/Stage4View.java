@@ -59,9 +59,9 @@ public class Stage4View extends View{
 	private float initArea;
 	private float cutArea;
 	
-	private boolean gameOver;
-	private boolean gameSuccess;
-	private boolean haveWriteDb;
+	public boolean gameOver;
+	public boolean gameSuccess;
+	public boolean haveWriteDb;
 	
 	private Canvas canvas;
 	private Paint paint;
@@ -125,7 +125,8 @@ public class Stage4View extends View{
 					if (LevelActivity.lvManager.getStageByLevel(5).size() == 0){
 						LevelActivity.lvManager.insertLevelInfo(5, 0, 0);
 					}else if (LevelActivity.lvManager.getStageByLevel(5).size() == 1) {
-						LevelActivity.lvManager.updateLevelInfo(5, 0, 0);
+						//下一关有数据不用初始化
+						//LevelActivity.lvManager.updateLevelInfo(5, 0, 0);
 					} else {
 						Log.i("Erro Message", "查出数据不是唯一的");
 					}
