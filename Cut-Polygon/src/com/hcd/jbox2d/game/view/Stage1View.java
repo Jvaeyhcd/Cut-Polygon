@@ -60,6 +60,7 @@ public class Stage1View extends View {
 	public boolean gameOver;
 	public boolean gameSuccess;
 	public boolean haveWriteDb;
+	public boolean isCut;
 	private Canvas canvas;
 	private Paint paint;
 	
@@ -246,7 +247,7 @@ public class Stage1View extends View {
 		public void run() {
 			synchronized (this) {
 				if(inScreen && outScreen && !gameOver) {
-					boolean isCut = false;
+					isCut = false;
 					ArrayList<Polygon> polytemp = new ArrayList<Polygon>();
 					for (int i = 0; i < polygons.size(); i++) {
 						Vec2[] temp = new Vec2[2];

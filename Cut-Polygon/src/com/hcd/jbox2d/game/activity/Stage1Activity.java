@@ -1,6 +1,7 @@
 package com.hcd.jbox2d.game.activity;
 
 import com.hcd.jbox2d.game.obj.ExitApplication;
+import com.hcd.jbox2d.game.utils.SoundFactory;
 import com.hcd.jbox2d.game.view.CustomDialog;
 import com.hcd.jbox2d.game.view.Stage1View;
 
@@ -26,6 +27,7 @@ public class Stage1Activity extends Activity {
 	public Stage1View stage1View;
 	public Handler mHandler;
 	public boolean didShow;
+	public SoundFactory soundFactory;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,6 +35,7 @@ public class Stage1Activity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);// х╚фа
 		
+		soundFactory = new SoundFactory(this);
 		DisplayMetrics metric = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metric);
 		screenWidth = metric.widthPixels;
@@ -66,6 +69,7 @@ public class Stage1Activity extends Activity {
 						} else
 							nextButton.setEnabled(false);
 						didShow = true;
+						soundFactory.playSound(1);
 					}
 					mHandler.postDelayed(update, 1000);
 				}

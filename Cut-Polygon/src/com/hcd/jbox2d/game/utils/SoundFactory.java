@@ -7,7 +7,6 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 
 public class SoundFactory {
-
 	private static SoundFactory soundFactory;
 	private static SoundPool sp;
 	private static int sounds[];
@@ -17,9 +16,10 @@ public class SoundFactory {
 		sp = new SoundPool(10, AudioManager.STREAM_SYSTEM, 5);
 		sounds[0] = sp.load(ma, R.raw.cut, 1);
 		sounds[1] = sp.load(ma, R.raw.success, 1);
+		sounds[2] = sp.load(ma, R.raw.failed, 1);
 	}
 	
-	public void palySound(int i) {
+	public void playSound(int i) {
 		sp.play(sounds[i], 1, 1, 0, 0, 1);
 	}
 	
