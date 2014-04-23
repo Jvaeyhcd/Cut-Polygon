@@ -33,7 +33,7 @@ public class Stage2View extends View {
 
 	private Stage2View gameView;
 	//过关百分比
-	private static float PASSSCORE = 0.4f;
+	private static float PASSSCORE = 0.8f;
 	//物理屏幕与物理世界的比例px/m
 	private final static int RATE = 60;
 	private World world;

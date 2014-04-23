@@ -33,7 +33,7 @@ public class Stage1View extends View {
 
 	private Stage1View gameView;
 	//过关百分比
-	private static float PASSSCORE = 1.0f;
+	private static float PASSSCORE = 0.9f;
 	//物理屏幕与物理世界的比例px/m
 	private final static int RATE = 60;
 	private World world;
@@ -262,12 +262,12 @@ public class Stage1View extends View {
 							float x = PolygonCenterUtils.getPolygonCenter(left).x;
 							float y = PolygonCenterUtils.getPolygonCenter(left).y;
 							left = PolygonCenterUtils.getStandardPolygon(left);
-							Polygon pleft = new Polygon(world, x, y, left, left.length, 0.1f, 0.1f, 1.0f, 0.0f);
+							Polygon pleft = new Polygon(world, x, y, left, left.length, 0.1f, 1.1f, 1.0f, 0.0f);
 							Vec2[] right = CutPolygonUtils.getRightCutPolygon(polygons.get(i).getNowVecs(), temp);
 							x = PolygonCenterUtils.getPolygonCenter(right).x;
 							y = PolygonCenterUtils.getPolygonCenter(right).y;
 							right = PolygonCenterUtils.getStandardPolygon(right);
-							Polygon pright = new Polygon(world, x, y, right, right.length, 0.1f, 0.1f, 1.0f, 0.0f);
+							Polygon pright = new Polygon(world, x, y, right, right.length, 0.1f, 1.1f, 1.0f, 0.0f);
 							polytemp.add(pright);
 							polytemp.add(pleft);
 						} else {

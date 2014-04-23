@@ -60,9 +60,10 @@ public class Polygon {
 		//设置多边形物体的一些固定的物理属性
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
-		fd.density = density;
-		fd.friction = friction;
-		fd.restitution = restitution;
+		//固定设置参数
+		fd.density = 10.0f; 					// 密度
+		fd.friction = 0.5f;   					//摩擦系数
+		fd.restitution = restitution;		//恢复系数
 		
 		BodyDef bd = new BodyDef();
 		bd.position.set(x, y);

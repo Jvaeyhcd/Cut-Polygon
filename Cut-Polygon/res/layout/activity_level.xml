@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#000000"
     tools:context=".LevelActivity" >
 
     <Button
@@ -16,6 +17,7 @@
         android:layout_alignBottom="@+id/Lev2Button"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="30dp"
+        android:padding="5dp"
         android:background="@drawable/btn_ok_selector"
         android:enabled="false"
         android:text="@string/Lev1" />
@@ -28,6 +30,7 @@
         android:layout_marginLeft="14dp"
         android:background="@drawable/btn_ok_selector"
         android:layout_marginTop="16dp"
+        android:padding="5dp"
         android:layout_toRightOf="@+id/Lev1Button"
         android:enabled="false"
         android:text="@string/Lev2" />
@@ -42,6 +45,7 @@
         android:layout_marginLeft="14dp"
         android:layout_toRightOf="@+id/Lev2Button"
         android:enabled="false"
+        android:padding="5dp"
         android:text="@string/Lev3" />
 
     <Button
@@ -52,6 +56,7 @@
         android:layout_alignBaseline="@+id/Lev3Button"
         android:layout_alignBottom="@+id/Lev3Button"
         android:layout_marginLeft="16dp"
+        android:padding="5dp"
         android:layout_toRightOf="@+id/Lev3Button"
         android:enabled="false"
         android:text="@string/Lev4" />
@@ -66,6 +71,7 @@
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/Lev4Button"
         android:enabled="false"
+        android:padding="5dp"
         android:text="@string/Lev5" />
 
 </RelativeLayout>

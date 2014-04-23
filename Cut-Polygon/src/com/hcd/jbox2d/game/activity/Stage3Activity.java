@@ -62,7 +62,7 @@ public class Stage3Activity extends Activity {
 		public void run() {
 			synchronized (this) {
 				if (!didShow){
-					if (stage3View.gameSuccess){
+					if (stage3View.gameOver){
 						optionsButton.setText("Hidden");
 						retryButton.setVisibility(0);
 						nextButton.setVisibility(0);

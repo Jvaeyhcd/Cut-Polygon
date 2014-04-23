@@ -1,9 +1,12 @@
 package com.hcd.jbox2d.game.activity;
 
 import com.hcd.jbox2d.game.obj.ExitApplication;
+import com.hcd.jbox2d.game.utils.SoundFactory;
 import com.hcd.jbox2d.game.view.CustomDialog;
+import com.hcd.jbox2d.game.view.Stage5View;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +24,10 @@ public class Stage5Activity extends Activity {
 
 	private Button optionsButton, homeButton, nextButton, retryButton;
 	public static int  screenWidth, screenHeight;
+	public Stage5View stage5View;
+	public Handler mHandler;
+	public boolean didShow;
+	public SoundFactory soundFactory;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +47,44 @@ public class Stage5Activity extends Activity {
 		nextButton = (Button)findViewById(R.id.nextstage5);
 		retryButton = (Button)findViewById(R.id.retrystage5);
 		
+		soundFactory = new SoundFactory(this);
+		didShow = false;
+		stage5View = (Stage5View) findViewById(R.id.stage5View);
+		mHandler = new Handler();
+		mHandler.post(update);
+		
 		ExitApplication.getInstance().addActivity(this);
 	}
+	
+	private Runnable update = new Runnable() {
+
+		@Override
+		public void run() {
+			synchronized (this) {
+				if (!didShow){
+					if (stage5View.gameOver){
+						optionsButton.setText("Hidden");
+						retryButton.setVisibility(0);
+						homeButton.setVisibility(0);
+//						if (stage5View.gameSuccess) {
+//							nextButton.setEnabled(true);
+//						} else
+//							nextButton.setEnabled(false);
+						didShow = true;
+						soundFactory.playSound(1);
+					}
+					mHandler.postDelayed(update, 1000);
+				}
+			}
+		}
+	};
 
 	public void optionsClick(View view){
 		Log.i("hcd", "µã»÷ÁË"+optionsButton.getText()+optionsButton.getVisibility());
 		if (optionsButton.getText().toString().equals("Options")){
 			optionsButton.setText("Hidden");
 			retryButton.setVisibility(0);
-			nextButton.setVisibility(0);
+//			nextButton.setVisibility(0);
 			homeButton.setVisibility(0);
 		} else {
 			optionsButton.setText("Options");
