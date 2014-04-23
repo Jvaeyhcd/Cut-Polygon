@@ -66,6 +66,8 @@ public class Stage5Activity extends Activity {
 						optionsButton.setText("Hidden");
 						retryButton.setVisibility(0);
 						homeButton.setVisibility(0);
+						nextButton.setVisibility(0);
+						nextButton.setEnabled(false);
 //						if (stage5View.gameSuccess) {
 //							nextButton.setEnabled(true);
 //						} else
@@ -84,7 +86,8 @@ public class Stage5Activity extends Activity {
 		if (optionsButton.getText().toString().equals("Options")){
 			optionsButton.setText("Hidden");
 			retryButton.setVisibility(0);
-//			nextButton.setVisibility(0);
+			nextButton.setVisibility(0);
+			nextButton.setEnabled(false);
 			homeButton.setVisibility(0);
 		} else {
 			optionsButton.setText("Options");
