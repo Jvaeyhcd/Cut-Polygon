@@ -64,7 +64,7 @@ public class Stage1Activity extends Activity {
 						retryButton.setVisibility(0);
 						nextButton.setVisibility(0);
 						homeButton.setVisibility(0);
-						if (stage1View.gameOver) {
+						if (stage1View.gameSuccess) {
 							nextButton.setEnabled(true);
 						} else
 							nextButton.setEnabled(false);

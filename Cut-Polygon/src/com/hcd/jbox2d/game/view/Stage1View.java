@@ -33,7 +33,7 @@ public class Stage1View extends View {
 
 	private Stage1View gameView;
 	//过关百分比
-	private static float PASSSCORE = 0.9f;
+	private static float PASSSCORE = 0.8f;
 	//物理屏幕与物理世界的比例px/m
 	private final static int RATE = 60;
 	private World world;
@@ -46,10 +46,11 @@ public class Stage1View extends View {
 	private float screenWidth, screenHeight;
 	private Polygon polygon2;
 	private ArrayList<Polygon> polygons;
-	private Line line;
+	private Line line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
 	private boolean inScreen, outScreen;
-	private int lineNum;
+	private static int lineNum;
 	private Platform platform;
+	private ArrayList<Platform> platforms;
 	//判断所有物体是否都静止
 	private boolean isSleeping;
 	//游戏所得分数的百分比
@@ -57,10 +58,11 @@ public class Stage1View extends View {
 	//初始物体的质量
 	private float initArea;
 	private float cutArea;
+	
 	public boolean gameOver;
 	public boolean gameSuccess;
 	public boolean haveWriteDb;
-	public boolean isCut;
+	
 	private Canvas canvas;
 	private Paint paint;
 	
@@ -71,7 +73,7 @@ public class Stage1View extends View {
 		initGame();
 	}
 
-	private void drawPlatform() {
+	private void drawPlatform(Platform platform) {
 		paint.setAntiAlias(true);
 		paint.setColor(Color.DKGRAY);
 		canvas.drawRect(platform.getX1() * RATE, platform.getY1() * RATE, platform.getX2() * RATE, platform.getY2() * RATE, paint);
@@ -120,11 +122,11 @@ public class Stage1View extends View {
 				canvas.drawText("SUCCESS!", screenWidth - 100, 30, paint);
 				//游戏过关后初始化下一关数据
 				if (!haveWriteDb) {
-					if (LevelActivity.lvManager.getStageByLevel(2).size() == 0){
-						LevelActivity.lvManager.insertLevelInfo(2, 0, 0);
-					}else if (LevelActivity.lvManager.getStageByLevel(2).size() == 1) {
-						//LevelActivity.lvManager.updateLevelInfo(2, 0, 0);
+					if (LevelActivity.lvManager.getStageByLevel(3).size() == 0){
+						LevelActivity.lvManager.insertLevelInfo(3, 0, 0);
+					}else if (LevelActivity.lvManager.getStageByLevel(3).size() == 1) {
 						//下一关有数据不用初始化
+						//LevelActivity.lvManager.updateLevelInfo(3, 0, 0);
 					} else {
 						Log.i("Erro Message", "查出数据不是唯一的");
 					}
@@ -134,11 +136,11 @@ public class Stage1View extends View {
 			}
 			if (!haveWriteDb) {
 				//游戏结束后保存数据
-				if (LevelActivity.lvManager.getStageByLevel(1).size() == 0){
-					LevelActivity.lvManager.insertLevelInfo(1, removed, 1);
-				}else if (LevelActivity.lvManager.getStageByLevel(1).size() == 1) {
-					int oldScore = LevelActivity.lvManager.getStageByLevel(1).get(0).getScore();
-					LevelActivity.lvManager.updateLevelInfo(1, oldScore > removed ? oldScore : removed, 1);
+				if (LevelActivity.lvManager.getStageByLevel(2).size() == 0){
+					LevelActivity.lvManager.insertLevelInfo(2, removed, 1);
+				}else if (LevelActivity.lvManager.getStageByLevel(2).size() == 1) {
+					int oldScore = LevelActivity.lvManager.getStageByLevel(2).get(0).getScore();
+					LevelActivity.lvManager.updateLevelInfo(2, oldScore > removed ? oldScore : removed, 1);
 				} else {
 					Log.i("Erro Message", "查出数据不是唯一的");
 				}
@@ -163,7 +165,9 @@ public class Stage1View extends View {
 		super.onDraw(canvas);
 		this.canvas = canvas;
 		setBackgroundColor(Color.WHITE);
-		drawPlatform();
+		for (int i = 0; i < platforms.size(); i++) {
+			drawPlatform(platforms.get(i));
+		}
 		for (int i = 0; i < polygons.size(); i++){
 			drawPolygon(polygons.get(i));
 		}
@@ -197,31 +201,31 @@ public class Stage1View extends View {
 		return true;
 	}
 	
+	/**
+	 * 初始化游戏
+	 */
 	private void initGame() {
-		line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
+		polygons = new ArrayList<Polygon>();
+		platforms = new ArrayList<Platform>();
 		lineNum = 3;
 		gameOver = false;
 		gameSuccess = false;
 		haveWriteDb = false;
-		polygons = new ArrayList<Polygon>();
+		gameView = this;
 		removed = 0;
 		inScreen = false;
 		outScreen = false;
 		isSleeping = true;
 		cutArea = 0.0f;
-		
-		gameView = this;
-		screenWidth = Stage1Activity.screenWidth;//800;
-		screenHeight = Stage1Activity.screenHeight;//480;
-		
+		screenWidth = Stage1Activity.screenWidth;
+		screenHeight = Stage1Activity.screenHeight;
 		Vec2 gravity = new Vec2(0.0f, 10.0f); // 向量，用来标示当前世界的重力方向，第一个参数为水平方向，负数为做，正数为右。第二个参数表示垂直方向
 		world = new World(gravity);
 		createPlatform();
 		createBorder(false, false, false, false);
 		createPolygon();
-		timeStep = 1.0f / 30.0f; // 定义频率
+		timeStep = 1.0f / 60.0f; // 定义频率
 		iterations = 10; // 定义迭代
-		
 		mHandler = new Handler();
 		mHandler.post(update);
 		mHandler.post(cutloop);
@@ -231,12 +235,10 @@ public class Stage1View extends View {
 
 		@Override
 		public void run() {
-			synchronized (this) {
-				if (!gameOver){
-					world.step(timeStep, iterations, iterations);
-					gameView.invalidate();
-					mHandler.postDelayed(update, (long) timeStep * 1000);
-				}
+			if (!gameOver){
+				world.step(timeStep, iterations, iterations);
+				gameView.invalidate();
+				mHandler.postDelayed(update, (long) timeStep * 1000);
 			}
 		}
 	};
@@ -245,44 +247,41 @@ public class Stage1View extends View {
 		
 		@Override
 		public void run() {
-			synchronized (this) {
-				if(inScreen && outScreen && !gameOver) {
-					isCut = false;
-					ArrayList<Polygon> polytemp = new ArrayList<Polygon>();
-					for (int i = 0; i < polygons.size(); i++) {
-						Vec2[] temp = new Vec2[2];
-						temp[0] = new Vec2(line.getV1().x / RATE, line.getV1().y / RATE);
-						temp[1] = new Vec2(line.getV2().x / RATE, line.getV2().y / RATE);
-						if ((CutPolygonUtils.getLeftCutPolygon(polygons.get(i).getNowVecs(), temp) != null) && 
-								(CutPolygonUtils.getRightCutPolygon(polygons.get(i).getNowVecs(), temp) != null)) {
-							isCut = true;
-							//物体被切成两块后，应该先去除之前创建在世界中的物体
-							world.destroyBody(polygons.get(i).getBody());
-							Vec2[] left = CutPolygonUtils.getLeftCutPolygon(polygons.get(i).getNowVecs(), temp);
-							float x = PolygonCenterUtils.getPolygonCenter(left).x;
-							float y = PolygonCenterUtils.getPolygonCenter(left).y;
-							left = PolygonCenterUtils.getStandardPolygon(left);
-							Polygon pleft = new Polygon(world, x, y, left, left.length, 0.1f, 1.1f, 1.0f, 0.0f);
-							Vec2[] right = CutPolygonUtils.getRightCutPolygon(polygons.get(i).getNowVecs(), temp);
-							x = PolygonCenterUtils.getPolygonCenter(right).x;
-							y = PolygonCenterUtils.getPolygonCenter(right).y;
-							right = PolygonCenterUtils.getStandardPolygon(right);
-							Polygon pright = new Polygon(world, x, y, right, right.length, 0.1f, 1.1f, 1.0f, 0.0f);
-							polytemp.add(pright);
-							polytemp.add(pleft);
-						} else {
-							polytemp.add(polygons.get(i));
-						}
+			if(inScreen && outScreen && !gameOver) {
+				boolean isCut = false;
+				ArrayList<Polygon> polytemp = new ArrayList<Polygon>();
+				for (int i = 0; i < polygons.size(); i++) {
+					Vec2[] temp = new Vec2[2];
+					temp[0] = new Vec2(line.getV1().x / RATE, line.getV1().y / RATE);
+					temp[1] = new Vec2(line.getV2().x / RATE, line.getV2().y / RATE);
+					if ((CutPolygonUtils.getLeftCutPolygon(polygons.get(i).getNowVecs(), temp) != null) && 
+							(CutPolygonUtils.getRightCutPolygon(polygons.get(i).getNowVecs(), temp) != null)) {
+						isCut = true;
+						//物体被切成两块后，应该先去除之前创建在世界中的物体
+						world.destroyBody(polygons.get(i).getBody());
+						Vec2[] left = CutPolygonUtils.getLeftCutPolygon(polygons.get(i).getNowVecs(), temp);
+						float x = PolygonCenterUtils.getPolygonCenter(left).x;
+						float y = PolygonCenterUtils.getPolygonCenter(left).y;
+						left = PolygonCenterUtils.getStandardPolygon(left);
+						Polygon pleft = new Polygon(world, x, y, left, left.length, 0.1f, 0.1f, 1.0f, 0.0f);
+						Vec2[] right = CutPolygonUtils.getRightCutPolygon(polygons.get(i).getNowVecs(), temp);
+						x = PolygonCenterUtils.getPolygonCenter(right).x;
+						y = PolygonCenterUtils.getPolygonCenter(right).y;
+						right = PolygonCenterUtils.getStandardPolygon(right);
+						Polygon pright = new Polygon(world, x, y, right, right.length, 0.1f, 0.1f, 1.0f, 0.0f);
+						polytemp.add(pright);
+						polytemp.add(pleft);
+					} else {
+						polytemp.add(polygons.get(i));
 					}
-					polygons.clear();
-					polygons = polytemp;
-					inScreen = false;
-					outScreen = false;
-					line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
-					if (isCut) lineNum--;
 				}
+				polygons.clear();
+				polygons = polytemp;
+				inScreen = false;
+				outScreen = false;
+				line = new Line(0.0f, 0.0f, 0.0f, 0.0f);
+				if (isCut) lineNum--;
 			}
-			
 			//判断物体是否调出屏幕外面以及物体是否停止运动
 			isSleeping = true;
 			{
@@ -331,6 +330,7 @@ public class Stage1View extends View {
 
 	private void createPlatform() {
 		platform = new Platform(world, screenWidth * 3 / 8 / RATE, screenHeight * 5 / 6 / RATE, screenWidth * 5 / 8 / RATE, screenHeight * 7 / 8 / RATE);
+		platforms.add(platform);
 	}
 
 
@@ -371,5 +371,5 @@ public class Stage1View extends View {
 		initArea = polygon2.getMass();
 		polygons.add(polygon2);
 	}
-
 }
+

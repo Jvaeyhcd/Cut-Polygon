@@ -61,8 +61,8 @@ public class Polygon {
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
 		//固定设置参数
-		fd.density = 10.0f; 					// 密度
-		fd.friction = 0.5f;   					//摩擦系数
+		fd.density = 5.0f; 					// 密度
+		fd.friction = 0.3f;   					//摩擦系数
 		fd.restitution = restitution;		//恢复系数
 		
 		BodyDef bd = new BodyDef();

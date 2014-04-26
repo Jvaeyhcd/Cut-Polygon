@@ -35,7 +35,7 @@ public class Platform {
 		// 设置成矩形，注意这里是两个参数分别是此矩形长宽的一半
 		ps.setAsBox(Math.abs(x2 - x1) / 2, Math.abs(y2 - y1) / 2);
 		FixtureDef fd = new FixtureDef();
-		fd.friction = 0.8f;
+		fd.friction = 0.2f;
 		fd.restitution = 0.5f;
 		fd.shape = ps;
 
