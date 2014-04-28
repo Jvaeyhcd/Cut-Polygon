@@ -338,7 +338,7 @@ public class Stage5View extends View{
 //		platform = new Platform(world, (screenWidth / 2 + 2) / RATE, screenHeight * 1 / 2  / RATE, screenWidth * 17 / 32 / RATE, screenHeight * 7 / 12 / RATE);
 //		platforms.add(platform);
 //		
-		platform = new Platform(world, screenWidth * 3 / 4 / RATE, screenHeight / 3 / RATE, screenWidth * 9 / 16 / RATE, screenHeight *12 / 30 / RATE);
+		platform = new Platform(world, screenWidth * 3 / 4 / RATE, screenHeight / 3 / RATE, screenWidth * 21 / 32 / RATE, screenHeight *12 / 30 / RATE);
 		platforms.add(platform);
 		platform = new Platform(world, 0, screenHeight * 25/ 30 / RATE, screenWidth / 3 / RATE, screenHeight *27 / 30 / RATE);
 		platforms.add(platform);

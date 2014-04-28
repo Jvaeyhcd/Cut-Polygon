@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     tools:context=".Stage2Activity" >
 
-    <com.hcd.jbox2d.game.view.Stage1View
+    <com.hcd.jbox2d.game.view.Stage2View
         android:id="@+id/stage2View"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />

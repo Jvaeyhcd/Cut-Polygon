@@ -122,9 +122,9 @@ public class Stage1View extends View {
 				canvas.drawText("SUCCESS!", screenWidth - 100, 30, paint);
 				//游戏过关后初始化下一关数据
 				if (!haveWriteDb) {
-					if (LevelActivity.lvManager.getStageByLevel(3).size() == 0){
-						LevelActivity.lvManager.insertLevelInfo(3, 0, 0);
-					}else if (LevelActivity.lvManager.getStageByLevel(3).size() == 1) {
+					if (LevelActivity.lvManager.getStageByLevel(2).size() == 0){
+						LevelActivity.lvManager.insertLevelInfo(2, 0, 0);
+					}else if (LevelActivity.lvManager.getStageByLevel(2).size() == 1) {
 						//下一关有数据不用初始化
 						//LevelActivity.lvManager.updateLevelInfo(3, 0, 0);
 					} else {
@@ -136,11 +136,11 @@ public class Stage1View extends View {
 			}
 			if (!haveWriteDb) {
 				//游戏结束后保存数据
-				if (LevelActivity.lvManager.getStageByLevel(2).size() == 0){
-					LevelActivity.lvManager.insertLevelInfo(2, removed, 1);
-				}else if (LevelActivity.lvManager.getStageByLevel(2).size() == 1) {
-					int oldScore = LevelActivity.lvManager.getStageByLevel(2).get(0).getScore();
-					LevelActivity.lvManager.updateLevelInfo(2, oldScore > removed ? oldScore : removed, 1);
+				if (LevelActivity.lvManager.getStageByLevel(1).size() == 0){
+					LevelActivity.lvManager.insertLevelInfo(1, removed, 1);
+				}else if (LevelActivity.lvManager.getStageByLevel(1).size() == 1) {
+					int oldScore = LevelActivity.lvManager.getStageByLevel(1).get(0).getScore();
+					LevelActivity.lvManager.updateLevelInfo(1, oldScore > removed ? oldScore : removed, 1);
 				} else {
 					Log.i("Erro Message", "查出数据不是唯一的");
 				}

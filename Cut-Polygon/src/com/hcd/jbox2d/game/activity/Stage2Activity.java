@@ -3,7 +3,7 @@ package com.hcd.jbox2d.game.activity;
 import com.hcd.jbox2d.game.obj.ExitApplication;
 import com.hcd.jbox2d.game.utils.SoundFactory;
 import com.hcd.jbox2d.game.view.CustomDialog;
-import com.hcd.jbox2d.game.view.Stage1View;
+import com.hcd.jbox2d.game.view.Stage2View;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +24,7 @@ public class Stage2Activity extends Activity {
 
 	private Button optionsButton, homeButton, nextButton, retryButton;
 	public static int  screenWidth, screenHeight;
-	private Stage1View stage2View;
+	private Stage2View stage2View;
 	public Handler mHandler;
 	public boolean didShow;
 	public SoundFactory soundFactory;
@@ -49,7 +49,7 @@ public class Stage2Activity extends Activity {
 		retryButton = (Button)findViewById(R.id.retrystage2);
 		
 		didShow = false;
-		stage2View = (Stage1View) findViewById(R.id.stage2View);
+		stage2View = (Stage2View) findViewById(R.id.stage2View);
 		mHandler = new Handler();
 		mHandler.post(update);
 		
