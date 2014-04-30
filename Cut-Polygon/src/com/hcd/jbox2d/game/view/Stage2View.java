@@ -331,7 +331,7 @@ public class Stage2View extends View {
 	private void createPlatform() {
 		platform = new Platform(world, screenWidth / 8 / RATE, screenHeight * 3 / 4 / RATE, screenWidth / 2 / RATE, screenHeight * 13 / 16 / RATE);
 		platforms.add(platform);
-		platform = new Platform(world, screenWidth * 2 / 3 / RATE, screenHeight * 3 / 4  / RATE, screenWidth * 5 / 6 / RATE, screenHeight * 13 / 16 / RATE);
+		platform = new Platform(world, screenWidth * 2 / 3 / RATE, screenHeight * 3 / 4  / RATE, screenWidth * 43 / 48 / RATE, screenHeight * 13 / 16 / RATE);
 		platforms.add(platform);
 		platform = new Platform(world, screenWidth / 16 / RATE, screenHeight * 1 / 2 / RATE, screenWidth / 8 / RATE, screenHeight * 15 / 16 / RATE);
 		platforms.add(platform);
