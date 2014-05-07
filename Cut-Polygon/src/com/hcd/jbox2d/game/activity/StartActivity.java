@@ -1,11 +1,14 @@
 package com.hcd.jbox2d.game.activity;
 
 import com.hcd.jbox2d.game.obj.ExitApplication;
+import com.hcd.jbox2d.game.view.CustomDialog;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
@@ -100,5 +103,37 @@ public class StartActivity extends Activity {
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		}
 		super.onResume();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			showAlertDialog();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	public void showAlertDialog() {
+
+		CustomDialog.Builder builder = new CustomDialog.Builder(this);
+//		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Are you sure to quite the Cut-Polygen game?");
+		builder.setTitle("Message");
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				//设置你的操作事项
+				ExitApplication.getInstance().exit();
+			}
+		});
+
+		builder.setNegativeButton("CANCEL",
+				new android.content.DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		builder.create().show();
+		
 	}
 }
