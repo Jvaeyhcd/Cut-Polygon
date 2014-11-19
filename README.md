@@ -3,7 +3,7 @@ Cut-Polygon
 
 What is Cut-Polygon?
 
-A game create by jvaeyhcd.
+A game create by Jvaeyhcd.
 This game is come from http://www.thegamehomepage.com/content/3-slices-walkthrough/ .
 But it's a flash game.So I wrote a Android game.I create this as my Graduation.
 
